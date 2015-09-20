@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+<h:head>
+	<h:outputStylesheet library="css" name="template.css" />
+	<title><ui:insert name="pageTitle"/></title>
+</h:head>
+
+<body>
+	<div id="header">
+		<h:outputText styleClass="site-name" value="Dublin Bikes Analytics" />
+		<h:graphicImage id="bikeImage" library="images" name="bicycle.svg"></h:graphicImage>
+		<div id="right">
+			<h:panelGrid columns="4" id="menuGrid">
+				<h:outputLink styleClass="#{fn:endsWith(request.requestURL, 'DublinBikesAnalytics/') || fn:contains(request.requestURL, 'index') ? 'current' : ''}" value="index.xhtml">Network State</h:outputLink>
+				<h:outputLink styleClass="#{fn:contains(request.requestURL, 'performance') ? 'current' : ''}" value="performance.xhtml">Performance</h:outputLink>
+				<h:outputLink styleClass="#{fn:contains(request.requestURL, 'lookUpStand') ? 'current' : ''}" value="lookUpStand.xhtml">Look Up Stand</h:outputLink>
+				<h:outputLink styleClass="#{fn:contains(request.requestURL, 'about') ? 'current' : ''}" value="about.xhtml">About</h:outputLink>
+			</h:panelGrid>
+		</div>
+	</div>
+	<div id="content-area">
+		<!-- <h1 class="page-title"><ui:insert name="pageTitle"/></h1>
+		 -->
+		<ui:insert name="content"/>
+	</div>
+	<div id="footer">
+		<h:outputText value="Philip Lowney, 2015"/>
+	</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<h:head>
+
+</h:head>
+<h:body>
+	<ui:composition template="template.xhtml">
+
+		<ui:define name="pageTitle">Network State</ui:define>
+		<ui:define name="content">
+			<h:outputScript library="js" name="three.min.js" />
+			<h:outputScript library="js" name="OrbitControls.js" />
+			<h:outputScript library="js" name="dublinBikes.js" />
+			<h:outputScript library="js" name="index.js" />
+
+			<h:form prependId="false">
+				<div style="float: left; width: 100%;">
+					
+					<h:panelGrid columns="3" style="float: left; position: relative;">
+						<h:outputText value="Time" style="padding: 5px 0 0 0; font-weight: bold" />
+						<h:outputText
+							value="#{indexUI.snapshotDate}" style="padding: 5px 0 0 0">
+							<f:convertDateTime pattern="HH:mm, MMM-dd" type="date" />
+						</h:outputText>
+						<p:commandButton value="Change Time" onclick="PF('timeChangeDialog').show();"/>
+					</h:panelGrid>
+					<h:panelGrid style="float: right;">
+						<p:selectOneButton value="#{indexUI.viewMode}">
+							<p:ajax update="mapTableContainer"/>
+							<f:selectItems value="#{indexUI.getViewModes()}"></f:selectItems>
+						</p:selectOneButton>
+					</h:panelGrid>
+				</div>
+				<p:dialog header="Change Time" widgetVar="timeChangeDialog" width="310" height="400" resizable="false" draggable="false">
+					<p:calendar value="#{indexUI.snapshotDate}" mode="inline" pattern="MM/dd/yyyy HH:mm:ss"/>
+					<div style="float: left; width: 100%; margin-top: 20px;">
+						<p:commandButton value="Submit" style="margin-left: 90px; width: 100px" action="#{indexUI.clickChangeTime}" update="@form"/>
+					</div>
+				</p:dialog>
+				<h:panelGroup id="mapTableContainer" style="float: left; margin-top: 20px;">
+					<h:panelGroup layout="block" rendered="#{indexUI.viewMode == 'MAP'}">
+						<iframe src="map.xhtml" style="width: 970px; height: 650px; margin-top: -70px" frameBorder="0"/>
+					</h:panelGroup>
+					
+					<p:dataTable rowIndexVar="rIndex" rendered="#{indexUI.viewMode == 'TABLE'}" value="#{indexUI.getNetworkSnapshot().standSnapshots}" var="stand">
+						<p:column headerText="Stand" filterBy="#{stand.description.name}" sortBy="#{stand.description.name}" filterMatchMode="contains">
+							<h:outputLink value="#" onclick="PF('mapDialog#{rIndex}').show();">#{stand.description.name}</h:outputLink>
+							<p:dialog header="#{stand.description.name} (#{stand.currentBikes} Bikes, #{stand.currentSpaces} Spaces)" dynamic="true" widgetVar="mapDialog#{rIndex}">
+								<iframe
+								  width="800"
+								  height="700"
+								  frameborder="0" style="border:0"
+								  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCeLjgEvg8Sv8i0_O1cCS5tJZNJxbk-lXQ
+								  	&amp;q=#{stand.description.latitude},#{stand.description.longitude}">
+								</iframe>
+							</p:dialog>
+						</p:column>
+						<p:column headerText="Bikes" sortBy="#{stand.currentBikes}">
+							<h:outputText value="#{stand.currentBikes}"/>
+						</p:column>
+						<p:column headerText="Spaces" sortBy="#{stand.currentSpaces}">
+							<h:outputText value="#{stand.currentSpaces}"/>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
