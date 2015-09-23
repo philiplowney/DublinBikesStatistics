@@ -18,9 +18,9 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.jbehave.web</groupId>
-			<artifactId>jbehave-web-selenium</artifactId>
-			<version>3.6-beta-2</version>
+		    <groupId>org.jbehave</groupId>
+		    <artifactId>jbehave-core</artifactId>
+		    <version>4.0.4</version>
 		</dependency>
 
 		<dependency>
