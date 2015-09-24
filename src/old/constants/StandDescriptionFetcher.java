@@ -1,4 +1,4 @@
-package constants;
+package old.constants;
 
 import java.io.File;
 import java.io.FileNotFoundException;

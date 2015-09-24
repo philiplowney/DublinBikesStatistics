@@ -1,4 +1,4 @@
-package service.uiSupport;
+package old.service.uiSupport;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,13 +7,13 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import old.constants.StandDescription;
+import old.constants.StandDescriptionFetcher;
+import old.service.eao.NetworkSampleEAO;
 import model.NetworkSample;
 import model.StandSample;
-import service.eao.NetworkSampleEAO;
-import ui.model.GUINetworkSnapshot;
-import ui.model.GUIStandSnapshot;
-import constants.StandDescription;
-import constants.StandDescriptionFetcher;
+import ui.model.threeDMapView.GUINetworkSnapshot;
+import ui.model.threeDMapView.GUIStandSnapshot;
 
 @Stateless
 public class NetworkStateServiceImpl implements NetworkStateService

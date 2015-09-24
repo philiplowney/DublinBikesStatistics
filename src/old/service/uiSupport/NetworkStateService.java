@@ -1,8 +1,8 @@
-package service.uiSupport;
+package old.service.uiSupport;
 
 import java.util.Date;
 
-import ui.model.GUINetworkSnapshot;
+import ui.model.threeDMapView.GUINetworkSnapshot;
 
 public interface NetworkStateService {
 	GUINetworkSnapshot fetchCurrentSnapshot();

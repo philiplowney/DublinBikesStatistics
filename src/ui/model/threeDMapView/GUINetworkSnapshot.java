@@ -1,4 +1,4 @@
-package ui.model;
+package ui.model.threeDMapView;
 
 import java.io.Serializable;
 import java.util.Date;

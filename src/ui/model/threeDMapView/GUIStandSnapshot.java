@@ -1,9 +1,9 @@
-package ui.model;
+package ui.model.threeDMapView;
 
 
 import java.io.Serializable;
 
-import constants.StandDescription;
+import old.constants.StandDescription;
 import lombok.Data;
 
 /**
