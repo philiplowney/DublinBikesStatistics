@@ -10,8 +10,6 @@ import javax.ejb.Stateless;
 import old.constants.StandDescription;
 import old.constants.StandDescriptionFetcher;
 import old.service.eao.NetworkSampleEAO;
-import model.NetworkSample;
-import model.StandSample;
 import ui.model.threeDMapView.GUINetworkSnapshot;
 import ui.model.threeDMapView.GUIStandSnapshot;
 

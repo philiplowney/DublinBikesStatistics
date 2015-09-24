@@ -1,4 +1,4 @@
-package model;
+package old.service.uiSupport;
 
 import java.util.Date;
 import java.util.List;

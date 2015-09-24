@@ -1,4 +1,4 @@
-package model;
+package old.service.uiSupport;
 
 import lombok.Data;
 

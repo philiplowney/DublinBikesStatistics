@@ -7,8 +7,8 @@ import java.util.Random;
 
 import javax.ejb.Stateless;
 
-import model.NetworkSample;
-import model.StandSample;
+import old.service.uiSupport.NetworkSample;
+import old.service.uiSupport.StandSample;
 
 @Stateless
 public class NetworkSampleEAOImpl implements NetworkSampleEAO
