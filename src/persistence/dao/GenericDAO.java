@@ -1,8 +1,10 @@
 package persistence.dao;
 
+import java.util.List;
+
 public interface GenericDAO<T>
 {
-	long countAll();
+	Long countAll();
 
 	T create(T t);
 
@@ -11,4 +13,6 @@ public interface GenericDAO<T>
 	T find(Object id);
 
 	T update(T t);
+
+	List<T> findAll();
 }

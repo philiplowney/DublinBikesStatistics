@@ -2,10 +2,11 @@ package persistence.dao;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public abstract class GenericDAOImpl<T> implements GenericDAO<T>
 {
@@ -23,12 +24,21 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T>
 	}
 
 	@Override
-	public long countAll()
+	public Long countAll()
 	{
 		final StringBuffer queryString = new StringBuffer("SELECT count(o) from ");
 		queryString.append(type.getSimpleName()).append(" o ");
-		final Query query = this.em.createQuery(queryString.toString());
-		return (Long) query.getSingleResult();
+		final TypedQuery<Long> query = this.em.createQuery(queryString.toString(), Long.class);
+		return query.getSingleResult();
+	}
+	
+	@Override
+	public List<T> findAll()
+	{
+		final StringBuffer queryString = new StringBuffer("SELECT o from ");
+		queryString.append(type.getSimpleName()).append(" o ");
+		final TypedQuery<T> query = this.em.createQuery(queryString.toString(), type);
+		return query.getResultList();
 	}
 
 	@Override
