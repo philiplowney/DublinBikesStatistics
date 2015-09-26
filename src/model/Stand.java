@@ -18,7 +18,7 @@ public class Stand
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(unique=true, nullable=false, name="number_in_network")
+	@Column(unique=true, nullable=false, name="NUMBER_IN_NETWORK")
 	private int numberInNetwork;
 	
 	@Column(nullable=false)
