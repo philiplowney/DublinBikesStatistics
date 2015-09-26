@@ -13,8 +13,8 @@ import javax.faces.model.SelectItem;
 
 import lombok.Getter;
 import lombok.Setter;
-import service.uiSupport.NetworkStateService;
-import ui.model.GUINetworkSnapshot;
+import old.service.uiSupport.NetworkStateService;
+import ui.model.threeDMapView.GUINetworkSnapshot;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
