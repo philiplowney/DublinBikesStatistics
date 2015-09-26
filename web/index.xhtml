@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<h:head>
+
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css" name="template.css"  /> 
+	<div id="leftArea">
+		<ul id="menu">
+			<li class="header">Real Time</li>
+			<li><a href="#">Near Me</a></li>
+			<li><a href="#">Look Up</a></li>
+			<li><a href="#">Map</a></li>
+			<li><a href="#">Table</a></li>
+		</ul>
+	</div>
+	<div id="contentArea">
+		there are #{tableViewUI.stands.size()} stands in the network
+		<p:dataTable value="#{tableViewUI.stands}" var="stand">
+			<p:column headerText="Stand">
+				#{stand.name}
+			</p:column>
+			<p:column headerText="Bikes">
+				#{stand.occupancy}
+			</p:column>
+			<p:column headerText="Spaces">
+				#{stand.capacity - stand.occupancy}
+			</p:column>
+		</p:dataTable>
+	</div>
+</h:body>
+</html>
