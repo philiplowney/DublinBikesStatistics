@@ -6,7 +6,7 @@
 		transaction-type="JTA">
 		<jta-data-source>jdbc/MySQLDublinBikesResource</jta-data-source>
 		<properties>
-			<property name="eclipselink.ddl-generation" value="create-tables" />
+			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 			<property name="eclipselink.logging.level" value="INFO" />
 			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDublinBikesSchema.sql"/>
