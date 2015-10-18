@@ -34,3 +34,4 @@ Scenario: Highlight full stands
 Given all the bike stands currently have a capacity of 10 and an occupancy of 10
 When the user navigates to the "real-time table" screen
 Then all stands are highlighted as "full"
+
