@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 
 public abstract class GenericDAOImpl<T> implements GenericDAO<T>
 {
-	@PersistenceContext
+	@PersistenceContext(unitName="DublinBikesAnalytics")
 	protected EntityManager em;
 
 	private Class<T> type;
@@ -21,6 +21,12 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T>
 		Type t = getClass().getGenericSuperclass();
 		ParameterizedType pt = (ParameterizedType) t;
 		type = (Class<T>) pt.getActualTypeArguments()[0];
+	}
+
+	public GenericDAOImpl(EntityManager entityManager)
+	{
+		this();
+		this.em = entityManager;
 	}
 
 	@Override

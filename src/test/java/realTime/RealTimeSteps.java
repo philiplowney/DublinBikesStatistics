@@ -1,19 +1,44 @@
 package realTime;
 
+import integration.tools.EntityManagerHandler;
+
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+
+import model.Stand;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import persistence.dao.StandDAO;
+import persistence.dao.StandDAOImpl;
+
 public class RealTimeSteps
 {
+	private StandDAO standDAO;
+
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
 	@Given("the bike stands have random capacity and occupancy")
+	@Pending
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
+		//Messin' with writing to DB
+//		EntityManager entityManager = EntityManagerHandler.getInstance().getEntityManager();
+//		entityManager.getTransaction().begin();
+//		standDAO = new StandDAOImpl(entityManager);
+//		Stand stand = new Stand();
+//		stand.setCapacity(1);
+//		stand.setOccupancy(1);
+//		stand.setLatitude(50); 
+//		stand.setLongitude(6);
+//		stand.setName("Some Stand");
+//		stand.setNumberInNetwork((int)(Math.random()*1000));
+//		standDAO.create(stand);
+//		entityManager.getTransaction().commit();
 		LOGGER.info("Setting random capacity and occupancy on stands");
 	}
 
