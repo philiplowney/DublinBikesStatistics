@@ -9,6 +9,8 @@
 		<properties>
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 			<property name="eclipselink.logging.level" value="FINE" />
+			<!-- To Review: Added the following parameter only for system test purposes. This should be removed for production -->
+			<property name="eclipselink.query-results-cache" value="false"/>
 		</properties>
 	</persistence-unit>
 	
