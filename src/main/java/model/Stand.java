@@ -7,20 +7,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.Data;
 
 @Data
 @Entity
-public class StandDescription implements Serializable
+public class Stand implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	public StandDescription()
+	public Stand()
 	{
 	}
 
-	public StandDescription(int num, String name, String addr, double lat, double lng)
+	public Stand(int num, String name, String addr, double lat, double lng)
 	{
 		number = num;
 		this.name = name;
@@ -42,4 +43,6 @@ public class StandDescription implements Serializable
 	private double latitude;
 	@Column(nullable = false)
 	private double longitude;
+	@OneToOne
+	private StandState state;
 }

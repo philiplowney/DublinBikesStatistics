@@ -7,8 +7,8 @@ import java.util.Random;
 
 import javax.ejb.Stateless;
 
+import model.StandState;
 import old.service.uiSupport.NetworkSample;
-import old.service.uiSupport.StandSample;
 
 @Stateless
 public class NetworkSampleEAOImpl implements NetworkSampleEAO
@@ -28,12 +28,12 @@ public class NetworkSampleEAOImpl implements NetworkSampleEAO
 	private NetworkSample makeRandomSample() {
 		NetworkSample result = new NetworkSample();
 		result.setSampleTime(new Date(System.currentTimeMillis()));
-		List<StandSample> standSamples = new ArrayList<>();
+		List<StandState> standSamples = new ArrayList<>();
 		result.setStandSamples(standSamples);
 		for(int i=0; i<102; i++)
 		{
-			StandSample standSample = new StandSample();
-			standSample.setStandNumber(i+1);
+			StandState standSample = new StandState();
+//			standSample.setStandNumber(i+1);
 			standSample.setBikesAvailable(randInt(0,20));
 			standSample.setPlacesAvailable(randInt(0,20));
 			standSamples.add(standSample);

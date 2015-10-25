@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import model.StandDescription;
+import model.Stand;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -32,13 +32,13 @@ public class StandDescriptionFetcher
 		return instance;
 	}
 
-	private List<StandDescription> descriptions;
+	private List<Stand> descriptions;
 
 	private StandDescriptionFetcher()
 	{
 		try
 		{
-			Type listType = new TypeToken<ArrayList<StandDescription>>()
+			Type listType = new TypeToken<ArrayList<Stand>>()
 			{
 			}.getType();
 			URL url = getClass().getClassLoader().getResource("StandDescriptions.json");
@@ -48,11 +48,11 @@ public class StandDescriptionFetcher
 		catch (JsonIOException | JsonSyntaxException | FileNotFoundException e)
 		{
 			LOGGER.log(Level.INFO, "Unable to get file describing stations", e);
-			descriptions = new ArrayList<StandDescription>();
+			descriptions = new ArrayList<Stand>();
 		}
 	}
 
-	public List<StandDescription> getDescriptions()
+	public List<Stand> getDescriptions()
 	{
 		return descriptions;
 	}

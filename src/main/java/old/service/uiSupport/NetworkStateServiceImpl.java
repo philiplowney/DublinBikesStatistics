@@ -7,7 +7,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import model.StandDescription;
+import model.Stand;
+import model.StandState;
 import old.service.eao.NetworkSampleEAO;
 import systemTest.tools.StandDescriptionFetcher;
 import ui.model.threeDMapView.GUINetworkSnapshot;
@@ -35,18 +36,18 @@ public class NetworkStateServiceImpl implements NetworkStateService
 	
 	private GUINetworkSnapshot buildGUISnapshotFromSample(
 			NetworkSample latestNetworkSample) {
-		List<StandDescription> descriptions = StandDescriptionFetcher.getInstance().getDescriptions();
+		List<Stand> descriptions = StandDescriptionFetcher.getInstance().getDescriptions();
 		List<GUIStandSnapshot> snapShots = new ArrayList<>();
 		
-		for(StandSample standSample : latestNetworkSample.getStandSamples())
+		for(StandState standSample : latestNetworkSample.getStandSamples())
 		{
-			for(StandDescription d : descriptions)
+			for(Stand d : descriptions)
 			{
-				if(d.getNumber() == standSample.getStandNumber())
-				{
-					snapShots.add(new GUIStandSnapshot(d, standSample.getPlacesAvailable(), standSample.getBikesAvailable()));
-					break;
-				}
+//				if(d.getNumber() == standSample.getStandNumber())
+//				{
+//					snapShots.add(new GUIStandSnapshot(d, standSample.getPlacesAvailable(), standSample.getBikesAvailable()));
+//					break;
+//				}
 			}
 		}
 		

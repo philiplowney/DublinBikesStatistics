@@ -4,10 +4,11 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
+import model.StandState;
 
 //TODO: Make this an entity
 @Data
 public class NetworkSample {
 	private Date sampleTime;
-	private List<StandSample> standSamples;
+	private List<StandState> standSamples;
 }

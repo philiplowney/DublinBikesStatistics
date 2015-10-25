@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
-import model.StandDescription;
+import model.Stand;
 
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
@@ -13,14 +13,15 @@ import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import persistence.dao.StandDescriptionDAO;
-import persistence.dao.StandDescriptionDAOImpl;
+import persistence.dao.StandDAO;
+import persistence.dao.StandDAOImpl;
 import systemTest.tools.EntityManagerHandler;
 import systemTest.tools.StandDescriptionFetcher;
 
 public class RealTimeSteps
 {
-	private StandDescriptionDAO standDAO;
+	private StandDAO standDAO;
+	private int totalQuantityOfStands = 0;
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
@@ -28,28 +29,30 @@ public class RealTimeSteps
 	public void setUpEachStory()
 	{
 		EntityManager entityManager = EntityManagerHandler.getInstance().getEntityManager();
-		standDAO = new StandDescriptionDAOImpl(entityManager);
+		standDAO = new StandDAOImpl(entityManager);
 		entityManager.getTransaction().begin();
 		// Delete existing stands
-		List<StandDescription> allExtantStands = standDAO.findAll();
-		for(StandDescription extantStandToDelete: allExtantStands)
+		List<Stand> allExtantStands = standDAO.findAll();
+		for(Stand extantStandToDelete: allExtantStands)
 		{
 			standDAO.delete(extantStandToDelete.getId());
 		}
 		// Load the standard stand list from Json file
-		List<StandDescription> stands = StandDescriptionFetcher.getInstance().getDescriptions();
+		List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
 		// Save the standard stand list
-		for(StandDescription stand : stands)
+		for(Stand stand : stands)
 		{
 			standDAO.create(stand);
 		}
 		entityManager.getTransaction().commit();
+		totalQuantityOfStands = stands.size();
+		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfStands);
 	}
 
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
-
+		
 		LOGGER.info("Setting random capacity and occupancy on stands");
 	}
 
