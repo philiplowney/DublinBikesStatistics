@@ -72,10 +72,17 @@ public class RealTimeSteps
 	}
 
 	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
-	@Pending
 	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy)
 	{
-		// PENDING
+		List<Stand> allStands = standDAO.findAll();
+		entityManager.getTransaction().begin();
+		for(Stand stand : allStands)
+		{
+			stand.setState(new StandState(Date.from(Instant.now()), occupancy, capacity-occupancy));
+			standDAO.update(stand);
+		}
+		entityManager.getTransaction().commit();
+		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
 	}
 
 	@When("the user navigates to the $screenName screen")
