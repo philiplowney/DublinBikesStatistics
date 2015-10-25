@@ -18,7 +18,7 @@
 			<li><a href="#">Near Me</a></li>
 			<li><a href="#">Look Up</a></li>
 			<li><a href="#">Map</a></li>
-			<li><a href="#">Table</a></li>
+			<li><a href="#">Table</a></li> 
 		</ul>
 	</div>
 	<div id="contentArea">
@@ -28,10 +28,10 @@
 				#{stand.name}
 			</p:column>
 			<p:column headerText="Bikes">
-				#{stand.occupancy}
+				#{stand.state.bikesAvailable}
 			</p:column>
 			<p:column headerText="Spaces">
-				#{stand.capacity - stand.occupancy}
+				#{stand.state.placesAvailable}
 			</p:column>
 		</p:dataTable>
 	</div>

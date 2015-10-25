@@ -18,7 +18,7 @@ public class TableViewUI
 {
 	@EJB
 	private StandDAO standDAO;
-	
+	 
 	@Getter @Setter
 	private List<Stand> stands;
 	
