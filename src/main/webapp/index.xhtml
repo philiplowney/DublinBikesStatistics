@@ -11,29 +11,21 @@
 
 </h:head>
 <h:body>
-	<h:outputStylesheet library="css" name="template.css"  /> 
-	<div id="leftArea">
-		<ul id="menu">
-			<li class="header">Real Time</li>
-			<li><a href="#">Near Me</a></li>
-			<li><a href="#">Look Up</a></li>
-			<li><a href="#">Map</a></li>
-			<li><a href="#">Table</a></li> 
-		</ul>
-	</div>
-	<div id="contentArea">
-		there are #{tableViewUI.stands.size()} stands in the network
-		<p:dataTable value="#{tableViewUI.stands}" var="stand">
-			<p:column headerText="Stand">
-				#{stand.name}
-			</p:column>
-			<p:column headerText="Bikes">
-				#{stand.state.bikesAvailable}
-			</p:column>
-			<p:column headerText="Spaces">
-				#{stand.state.placesAvailable}
-			</p:column>
-		</p:dataTable>
-	</div>
+	<ui:composition template="resources/template.xhtml">
+		<ui:define name="pageTitle">Table View</ui:define>
+		<ui:define name="content">
+			<p:dataTable value="#{tableViewUI.stands}" var="stand">
+				<p:column headerText="Stand">
+					#{stand.name}
+				</p:column>
+				<p:column headerText="Bikes">
+					#{stand.state.bikesAvailable}
+				</p:column>
+				<p:column headerText="Spaces">
+					#{stand.state.placesAvailable}
+				</p:column>
+			</p:dataTable>
+		</ui:define>
+	</ui:composition>
 </h:body>
 </html>
