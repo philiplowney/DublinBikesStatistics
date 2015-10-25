@@ -20,6 +20,18 @@ import lombok.Data;
 @Table(name = "stand_state")
 public class StandState
 {
+	public StandState()
+	{
+	}
+
+	public StandState(Date sampleTime, int bikesAvailable, int placesAvailable)
+	{
+		super();
+		this.sampleTime = sampleTime;
+		this.bikesAvailable = bikesAvailable;
+		this.placesAvailable = placesAvailable;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -27,11 +39,11 @@ public class StandState
 	@OneToOne(mappedBy = "state")
 	@JoinColumn(name = "stand")
 	private Stand stand;
-	
+
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date sampleTime;
-	
+
 	@Column
 	private int bikesAvailable;
 	@Column

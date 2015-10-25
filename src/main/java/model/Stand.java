@@ -43,6 +43,6 @@ public class Stand implements Serializable
 	private double latitude;
 	@Column(nullable = false)
 	private double longitude;
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
 	private StandState state;
 }

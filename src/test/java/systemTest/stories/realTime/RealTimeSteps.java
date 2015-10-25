@@ -1,11 +1,15 @@
 package systemTest.stories.realTime;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
 import model.Stand;
+import model.StandState;
 
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
@@ -24,11 +28,12 @@ public class RealTimeSteps
 	private int totalQuantityOfStands = 0;
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
+	private EntityManager entityManager;
 
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		EntityManager entityManager = EntityManagerHandler.getInstance().getEntityManager();
+		entityManager = EntityManagerHandler.getInstance().getEntityManager();
 		standDAO = new StandDAOImpl(entityManager);
 		entityManager.getTransaction().begin();
 		// Delete existing stands
@@ -52,8 +57,18 @@ public class RealTimeSteps
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
-		
-		LOGGER.info("Setting random capacity and occupancy on stands");
+		List<Stand> allStands = standDAO.findAll();
+		entityManager.getTransaction().begin();
+		for(Stand stand : allStands)
+		{
+			Random rand = new Random();
+			int spaces = rand.nextInt(21);
+			int bikes = rand.nextInt(21);
+			stand.setState(new StandState(Date.from(Instant.now()), bikes, spaces));
+			standDAO.update(stand);
+		}
+		entityManager.getTransaction().commit();
+		LOGGER.info("Stands configured with random states");
 	}
 
 	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
