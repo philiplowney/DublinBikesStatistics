@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import model.Stand;
 import persistence.dao.StandDAO;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class TableViewUI
 {
 	@EJB
