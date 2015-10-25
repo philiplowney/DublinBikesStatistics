@@ -34,13 +34,17 @@ public class RealTimeSteps
 	public void setUpEachStory()
 	{
 		entityManager = EntityManagerHandler.getInstance().getEntityManager();
-		standDAO = new StandDAOImpl(entityManager);
+		
 		entityManager.getTransaction().begin();
+		standDAO = new StandDAOImpl(entityManager);
 		// Delete existing stands
 		List<Stand> allExtantStands = standDAO.findAll();
-		for(Stand extantStandToDelete: allExtantStands)
+		if(!allExtantStands.isEmpty())
 		{
-			standDAO.delete(extantStandToDelete.getId());
+			for(Stand extantStandToDelete: allExtantStands)
+			{
+				standDAO.delete(extantStandToDelete.getId());
+			}
 		}
 		// Load the standard stand list from Json file
 		List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
@@ -68,6 +72,10 @@ public class RealTimeSteps
 			standDAO.update(stand);
 		}
 		entityManager.getTransaction().commit();
+		if(entityManager.getTransaction().isActive())
+		{
+			entityManager.flush();
+		}
 		LOGGER.info("Stands configured with random states");
 	}
 
@@ -82,6 +90,10 @@ public class RealTimeSteps
 			standDAO.update(stand);
 		}
 		entityManager.getTransaction().commit();
+		if(entityManager.getTransaction().isActive())
+		{
+			entityManager.flush();
+		}
 		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
 	}
 
