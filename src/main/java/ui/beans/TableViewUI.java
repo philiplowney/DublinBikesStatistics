@@ -9,18 +9,18 @@ import javax.faces.bean.ViewScoped;
 
 import lombok.Getter;
 import lombok.Setter;
-import model.Stand;
-import persistence.dao.StandDAO;
+import model.StandDescription;
+import persistence.dao.StandDescriptionDAO;
 
 @ManagedBean
 @ViewScoped
 public class TableViewUI
 {
 	@EJB
-	private StandDAO standDAO;
+	private StandDescriptionDAO standDAO;
 	
 	@Getter @Setter
-	private List<Stand> stands;
+	private List<StandDescription> stands;
 	
 	@PostConstruct
 	public void init()

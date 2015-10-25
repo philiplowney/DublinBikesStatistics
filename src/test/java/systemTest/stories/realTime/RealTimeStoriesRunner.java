@@ -1,8 +1,8 @@
-package realTime;
+package systemTest.stories.realTime;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
-import static org.jbehave.core.reporters.Format.HTML;
 import static org.jbehave.core.reporters.Format.CONSOLE;
+import static org.jbehave.core.reporters.Format.HTML;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -39,9 +39,8 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 @RunWith(JUnitReportingRunner.class)
 public class RealTimeStoriesRunner extends JUnitStories
 {
-
 	public RealTimeStoriesRunner()
-	{
+	{ 	
 		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true).useThreads(2).useStoryTimeoutInSecs(60);
 	}
 

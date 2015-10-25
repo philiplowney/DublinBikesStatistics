@@ -7,9 +7,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import old.constants.StandDescription;
-import old.constants.StandDescriptionFetcher;
+import model.StandDescription;
 import old.service.eao.NetworkSampleEAO;
+import systemTest.tools.StandDescriptionFetcher;
 import ui.model.threeDMapView.GUINetworkSnapshot;
 import ui.model.threeDMapView.GUIStandSnapshot;
 

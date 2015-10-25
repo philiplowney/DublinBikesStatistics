@@ -1,4 +1,4 @@
-package integration.tools;
+package systemTest.tools;
 
 import java.util.HashMap;
 import java.util.Map;

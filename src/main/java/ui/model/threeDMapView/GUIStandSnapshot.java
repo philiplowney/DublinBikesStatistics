@@ -3,8 +3,8 @@ package ui.model.threeDMapView;
 
 import java.io.Serializable;
 
-import old.constants.StandDescription;
 import lombok.Data;
+import model.StandDescription;
 
 /**
  * Used by the GUI for mapping purposes

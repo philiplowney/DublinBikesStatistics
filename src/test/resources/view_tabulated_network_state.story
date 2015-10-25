@@ -6,7 +6,7 @@ I want to see a table of all stands and their current states
 Scenario: See all 100 stands
 Given the bike stands have random capacity and occupancy
 When the user navigates to the "real-time table" screen
-Then 100 stands will be visible in a table
+Then all stands will be visible in a table
 
 Scenario: View capacity and occupancy
 Given all the bike stands currently have a capacity of 20 and an occupancy of 10

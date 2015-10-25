@@ -1,44 +1,55 @@
-package realTime;
+package systemTest.stories.realTime;
 
-import integration.tools.EntityManagerHandler;
-
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
 
-import model.Stand;
+import model.StandDescription;
 
+import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import persistence.dao.StandDAO;
-import persistence.dao.StandDAOImpl;
+import persistence.dao.StandDescriptionDAO;
+import persistence.dao.StandDescriptionDAOImpl;
+import systemTest.tools.EntityManagerHandler;
+import systemTest.tools.StandDescriptionFetcher;
 
 public class RealTimeSteps
 {
-	private StandDAO standDAO;
+	private StandDescriptionDAO standDAO;
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
+	@BeforeStories
+	public void setUpEachStory()
+	{
+		EntityManager entityManager = EntityManagerHandler.getInstance().getEntityManager();
+		standDAO = new StandDescriptionDAOImpl(entityManager);
+		entityManager.getTransaction().begin();
+		// Delete existing stands
+		List<StandDescription> allExtantStands = standDAO.findAll();
+		for(StandDescription extantStandToDelete: allExtantStands)
+		{
+			standDAO.delete(extantStandToDelete.getId());
+		}
+		// Load the standard stand list from Json file
+		List<StandDescription> stands = StandDescriptionFetcher.getInstance().getDescriptions();
+		// Save the standard stand list
+		for(StandDescription stand : stands)
+		{
+			standDAO.create(stand);
+		}
+		entityManager.getTransaction().commit();
+	}
+
 	@Given("the bike stands have random capacity and occupancy")
-	@Pending
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
-		//Messin' with writing to DB
-//		EntityManager entityManager = EntityManagerHandler.getInstance().getEntityManager();
-//		entityManager.getTransaction().begin();
-//		standDAO = new StandDAOImpl(entityManager);
-//		Stand stand = new Stand();
-//		stand.setCapacity(1);
-//		stand.setOccupancy(1);
-//		stand.setLatitude(50); 
-//		stand.setLongitude(6);
-//		stand.setName("Some Stand");
-//		stand.setNumberInNetwork((int)(Math.random()*1000));
-//		standDAO.create(stand);
-//		entityManager.getTransaction().commit();
+
 		LOGGER.info("Setting random capacity and occupancy on stands");
 	}
 
@@ -76,11 +87,12 @@ public class RealTimeSteps
 	{
 		// PENDING
 	}
-	
+
 	@Then("the table is ordered by $column")
 	@Pending
-	public void thenTheTableIsOrderedBycolumn(String columnName) {
-	  // PENDING
+	public void thenTheTableIsOrderedBycolumn(String columnName)
+	{
+		// PENDING
 	}
 
 	@Then("all stands will have an occupancy of $occupancy")
