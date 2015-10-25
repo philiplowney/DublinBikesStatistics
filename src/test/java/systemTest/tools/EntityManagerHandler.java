@@ -38,7 +38,7 @@ public class EntityManagerHandler
 		properties.put(LOGGING_THREAD, "false");
 		properties.put(LOGGING_SESSION, "false");
 
-		EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("DublinBikesAnalytics", properties);
+		EntityManagerFactory emf = javax.persistence.Persistence.createEntityManagerFactory("DublinBikesAnalytics_systemTest", properties);
 		this.entityManager = emf.createEntityManager();
 	}
 

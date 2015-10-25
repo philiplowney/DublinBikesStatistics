@@ -9,6 +9,17 @@
 		<properties>
 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
 			<property name="eclipselink.logging.level" value="FINE" />
+		</properties>
+	</persistence-unit>
+	
+	<persistence-unit name="DublinBikesAnalytics_systemTest">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>jdbc/MySQLDublinBikesResource</jta-data-source>
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+			<property name="eclipselink."
+			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDublinBikesSchema.sql"/>
 			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDublinBikesSchema.sql"/>
