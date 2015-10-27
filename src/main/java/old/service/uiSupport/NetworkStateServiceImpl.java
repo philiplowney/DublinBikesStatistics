@@ -7,10 +7,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import model.Stand;
-import model.StandState;
 import old.service.eao.NetworkSampleEAO;
-import systemTest.tools.StandDescriptionFetcher;
 import ui.model.threeDMapView.GUINetworkSnapshot;
 import ui.model.threeDMapView.GUIStandSnapshot;
 
@@ -36,21 +33,21 @@ public class NetworkStateServiceImpl implements NetworkStateService
 	
 	private GUINetworkSnapshot buildGUISnapshotFromSample(
 			NetworkSample latestNetworkSample) {
-		List<Stand> descriptions = StandDescriptionFetcher.getInstance().getDescriptions();
+//		List<Stand> descriptions = StandDescriptionFetcher.getInstance().getDescriptions();
 		List<GUIStandSnapshot> snapShots = new ArrayList<>();
-		
-		for(StandState standSample : latestNetworkSample.getStandSamples())
-		{
-			for(Stand d : descriptions)
-			{
-//				if(d.getNumber() == standSample.getStandNumber())
-//				{
-//					snapShots.add(new GUIStandSnapshot(d, standSample.getPlacesAvailable(), standSample.getBikesAvailable()));
-//					break;
-//				}
-			}
-		}
-		
+//		
+//		for(StandState standSample : latestNetworkSample.getStandSamples())
+//		{
+//			for(Stand d : descriptions)
+//			{
+////				if(d.getNumber() == standSample.getStandNumber())
+////				{
+////					snapShots.add(new GUIStandSnapshot(d, standSample.getPlacesAvailable(), standSample.getBikesAvailable()));
+////					break;
+////				}
+//			}
+//		}
+//		
 		GUINetworkSnapshot result = new GUINetworkSnapshot();
 		result.setStandSnapshots(snapShots);
 		result.setCaptureTime(new Date(System.currentTimeMillis())); // TODO: consult the DB to get the last check time

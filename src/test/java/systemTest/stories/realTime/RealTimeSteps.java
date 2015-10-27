@@ -21,6 +21,9 @@ import persistence.dao.StandDAO;
 import persistence.dao.StandDAOImpl;
 import systemTest.tools.EntityManagerHandler;
 import systemTest.tools.StandDescriptionFetcher;
+import systemTest.tools.pageObjects.BasePage;
+import systemTest.tools.pageObjects.IndexPage;
+import systemTest.tools.pageObjects.TableViewPage;
 
 public class RealTimeSteps
 {
@@ -29,6 +32,7 @@ public class RealTimeSteps
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 	private EntityManager entityManager;
+	private TableViewPage tableViewPage;
 
 	@BeforeStories
 	public void setUpEachStory()
@@ -56,6 +60,7 @@ public class RealTimeSteps
 		entityManager.getTransaction().commit();
 		totalQuantityOfStands = stands.size();
 		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfStands);
+		
 	}
 
 	@Given("the bike stands have random capacity and occupancy")
@@ -98,10 +103,12 @@ public class RealTimeSteps
 	}
 
 	@When("the user navigates to the $screenName screen")
-	@Pending
 	public void whenTheUserNavigatesToScreen(String screenName)
 	{
-		LOGGER.info("I am looking at the ");
+		IndexPage indexPage = new IndexPage();
+		indexPage.navToIndex();
+		tableViewPage = indexPage.getLeftMenu().navRealTimeTableView();
+		LOGGER.info("I am looking at the table view page");
 	}
 
 	@When("the user orders the table by $column")
