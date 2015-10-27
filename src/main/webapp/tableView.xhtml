@@ -12,9 +12,19 @@
 </h:head>
 <h:body>
 	<ui:composition template="resources/template.xhtml">
-		<ui:define name="pageTitle">Index</ui:define>
+		<ui:define name="pageTitle">Table View</ui:define>
 		<ui:define name="content">
-			index content
+			<p:dataTable value="#{tableViewUI.stands}" var="stand">
+				<p:column headerText="Stand">
+					#{stand.name}
+				</p:column>
+				<p:column headerText="Bikes" width="70">
+					#{stand.state.bikesAvailable}
+				</p:column>
+				<p:column headerText="Spaces" width="70">
+					#{stand.state.placesAvailable}
+				</p:column>
+			</p:dataTable>
 		</ui:define>
 	</ui:composition>
 </h:body>
