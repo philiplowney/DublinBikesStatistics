@@ -1,15 +1,10 @@
 package systemTest.stories.realTime;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import javax.persistence.EntityManager;
-
 import model.Stand;
-import model.StandState;
 
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
@@ -17,37 +12,31 @@ import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
-import persistence.dao.StandDAO;
-import persistence.dao.StandDAOImpl;
-import systemTest.tools.EntityManagerHandler;
 import systemTest.tools.StandDescriptionFetcher;
-import systemTest.tools.pageObjects.BasePage;
+import systemTest.tools.WebServiceHandler;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
+import systemTest.ws.WebServiceTest;
 
 public class RealTimeSteps
 {
-	private StandDAO standDAO;
+	private WebServiceHandler wsHandler = new WebServiceHandler(WebServiceTest.BASE_REST_ADDRESS);
 	private int totalQuantityOfStands = 0;
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
-	private EntityManager entityManager;
+
 	private TableViewPage tableViewPage;
 
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		entityManager = EntityManagerHandler.getInstance().getEntityManager();
-		
-		entityManager.getTransaction().begin();
-		standDAO = new StandDAOImpl(entityManager);
 		// Delete existing stands
-		List<Stand> allExtantStands = standDAO.findAll();
+		List<Stand> allExtantStands = wsHandler.callListStands();
 		if(!allExtantStands.isEmpty())
 		{
 			for(Stand extantStandToDelete: allExtantStands)
 			{
-				standDAO.delete(extantStandToDelete.getId());
+				wsHandler.callDeleteStand(extantStandToDelete.getNumber());
 			}
 		}
 		// Load the standard stand list from Json file
@@ -55,9 +44,8 @@ public class RealTimeSteps
 		// Save the standard stand list
 		for(Stand stand : stands)
 		{
-			standDAO.create(stand);
+			wsHandler.callCreateStand(stand);
 		}
-		entityManager.getTransaction().commit();
 		totalQuantityOfStands = stands.size();
 		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfStands);
 		
@@ -66,20 +54,13 @@ public class RealTimeSteps
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
-		List<Stand> allStands = standDAO.findAll();
-		entityManager.getTransaction().begin();
+		List<Stand> allStands = wsHandler.callListStands();
+		Random rand = new Random();
 		for(Stand stand : allStands)
 		{
-			Random rand = new Random();
 			int spaces = rand.nextInt(21);
 			int bikes = rand.nextInt(21);
-			stand.setState(new StandState(Date.from(Instant.now()), bikes, spaces));
-			standDAO.update(stand);
-		}
-		entityManager.getTransaction().commit();
-		if(entityManager.getTransaction().isActive())
-		{
-			entityManager.flush();
+			wsHandler.callUpdateStand(stand.getNumber(), bikes, spaces);
 		}
 		LOGGER.info("Stands configured with random states");
 	}
@@ -87,17 +68,10 @@ public class RealTimeSteps
 	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
 	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy)
 	{
-		List<Stand> allStands = standDAO.findAll();
-		entityManager.getTransaction().begin();
+		List<Stand> allStands = wsHandler.callListStands();
 		for(Stand stand : allStands)
 		{
-			stand.setState(new StandState(Date.from(Instant.now()), occupancy, capacity-occupancy));
-			standDAO.update(stand);
-		}
-		entityManager.getTransaction().commit();
-		if(entityManager.getTransaction().isActive())
-		{
-			entityManager.flush();
+			wsHandler.callUpdateStand(stand.getNumber(), occupancy, capacity-occupancy);
 		}
 		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
 	}

@@ -7,17 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "stand_state")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class StandState
 {
 	public StandState()
@@ -34,14 +36,12 @@ public class StandState
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@XmlTransient
 	private long id;
-
-	@OneToOne(mappedBy = "state")
-	@JoinColumn(name = "stand")
-	private Stand stand;
-
+	
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
+	@XmlTransient // too much work right now: solution possibly here though: http://stackoverflow.com/questions/2519432/jaxb-unmarshal-timestamp
 	private Date sampleTime;
 
 	@Column

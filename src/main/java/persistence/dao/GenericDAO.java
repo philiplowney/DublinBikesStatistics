@@ -8,9 +8,7 @@ public interface GenericDAO<T>
 
 	T create(T t);
 
-	void delete(Object id);
-
-	T find(Object id);
+	void delete(T t);
 
 	T update(T t);
 

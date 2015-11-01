@@ -53,17 +53,11 @@ public abstract class GenericDAOImpl<T> implements GenericDAO<T>
 		this.em.persist(t);
 		return t;
 	}
-
+	
 	@Override
-	public void delete(final Object id)
+	public void delete(final T t)
 	{
-		this.em.remove(this.em.getReference(type, id));
-	}
-
-	@Override
-	public T find(final Object id)
-	{
-		return (T) this.em.find(type, id);
+		em.remove(t);
 	}
 
 	@Override
