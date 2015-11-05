@@ -62,6 +62,7 @@ public class RealTimeSteps
 	@AfterStories
 	public void tidyUpAfterStories()
 	{
+		WebDriverManager.getInstance().shutDown();
 	}
 
 	@Given("the bike stands have random capacity and occupancy")

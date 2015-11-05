@@ -31,11 +31,11 @@ public class WebDriverManager
 	}
 	public WebDriverManager()
 	{
-		URL driverPath = WebDriverManager.class.getClassLoader().getResource("chromedriver.exe");
-		
-//		System.setProperty("webdriver.chrome.driver", driverPath.getPath());
-//		driver = new ChromeDriver();
 		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(0, TimeUnit.MILLISECONDS);
+	}
+	public void shutDown()
+	{
+		driver.quit();
 	}
 }
