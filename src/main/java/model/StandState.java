@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,8 +21,10 @@ import lombok.Data;
 @Entity
 @Table(name = "stand_state")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class StandState
+public class StandState implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public StandState()
 	{
 	}

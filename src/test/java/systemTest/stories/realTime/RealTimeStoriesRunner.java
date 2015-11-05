@@ -41,7 +41,7 @@ public class RealTimeStoriesRunner extends JUnitStories
 {
 	public RealTimeStoriesRunner()
 	{ 	
-		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true).useThreads(2).useStoryTimeoutInSecs(60);
+		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true);
 	}
 
 	@Override

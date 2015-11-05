@@ -22,8 +22,9 @@ Then the table is ordered by <column>
 
 Examples:     
 |column|
-|occupancy|
-|stand name|
+|Bikes|
+|Stand|
+|Spaces|
 
 Scenario: Highlight empty stands
 Given all the bike stands currently have a capacity of 20 and an occupancy of 0

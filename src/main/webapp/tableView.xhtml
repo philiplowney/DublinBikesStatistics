@@ -14,17 +14,19 @@
 	<ui:composition template="resources/template.xhtml">
 		<ui:define name="pageTitle">Table View</ui:define>
 		<ui:define name="content">
-			<p:dataTable value="#{tableViewUI.stands}" var="stand">
-				<p:column headerText="Stand">
-					#{stand.name}
-				</p:column>
-				<p:column headerText="Bikes" width="70">
-					#{stand.state.bikesAvailable}
-				</p:column>
-				<p:column headerText="Spaces" width="70">
-					#{stand.state.placesAvailable}
-				</p:column>
-			</p:dataTable>
+			<h:form>
+				<p:dataTable value="#{tableViewUI.stands}" var="stand">
+					<p:column headerText="Stand" sortable="true" sortBy="#{stand.name}">
+						<h:outputText value="#{stand.name}" />
+					</p:column>
+					<p:column headerText="Bikes" width="80" sortable="true" sortBy="#{stand.state.bikesAvailable}">
+						<h:outputText value="#{stand.state.bikesAvailable}" />
+					</p:column>
+					<p:column headerText="Spaces" width="80" sortable="true" sortBy="#{stand.state.placesAvailable}">
+						<h:outputText value="#{stand.state.placesAvailable}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

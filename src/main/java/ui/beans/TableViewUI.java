@@ -1,5 +1,6 @@
 package ui.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,8 +15,10 @@ import persistence.dao.StandDAO;
 
 @ManagedBean
 @ViewScoped
-public class TableViewUI
+public class TableViewUI implements Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private StandDAO standDAO;
 	 
