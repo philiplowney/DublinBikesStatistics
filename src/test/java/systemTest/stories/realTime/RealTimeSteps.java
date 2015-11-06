@@ -16,6 +16,7 @@ import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.core.embedder.Embedder;
 import org.junit.Assert;
 
 import systemTest.tools.StandDescriptionFetcher;
@@ -25,7 +26,7 @@ import systemTest.tools.pageObjects.TableViewPage;
 import systemTest.tools.selenium.WebDriverManager;
 import systemTest.ws.WebServiceTest;
 
-public class RealTimeSteps
+public class RealTimeSteps extends Embedder
 {
 	private WebServiceHandler wsHandler = new WebServiceHandler(WebServiceTest.BASE_REST_ADDRESS);
 	private int totalQuantityOfStands = 0;

@@ -2,10 +2,10 @@ package systemTest.stories.realTime;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
-import static org.jbehave.core.reporters.Format.HTML;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Properties;
 
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
@@ -17,6 +17,7 @@ import org.jbehave.core.io.StoryFinder;
 import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.model.ExamplesTableFactory;
 import org.jbehave.core.parsers.RegexStoryParser;
+import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.InstanceStepsFactory;
@@ -37,10 +38,10 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
  * </p>
  */
 @RunWith(JUnitReportingRunner.class)
-public class RealTimeStoriesRunner extends JUnitStories
+public class RealTimeStories extends JUnitStories
 {
-	public RealTimeStoriesRunner()
-	{ 	
+	public RealTimeStories()
+	{
 		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true);
 	}
 
@@ -55,8 +56,16 @@ public class RealTimeStoriesRunner extends JUnitStories
 		ExamplesTableFactory examplesTableFactory = new ExamplesTableFactory(new LocalizedKeywords(), new LoadFromClasspath(embeddableClass), parameterConverters);
 		// add custom converters
 		parameterConverters.addConverters(new DateConverter(new SimpleDateFormat("yyyy-MM-dd")), new ExamplesTableConverter(examplesTableFactory));
+		
+		Properties viewResources = new Properties();
+		viewResources.put("decorateNonHtml", "true");
+		
+		StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
+				.withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
+				.withDefaultFormats().withFormats(CONSOLE, Format.HTML_TEMPLATE, Format.HTML)
+				.withViewResources(viewResources);
 		return new MostUsefulConfiguration().useStoryLoader(new LoadFromClasspath(embeddableClass)).useStoryParser(new RegexStoryParser(examplesTableFactory))
-				.useStoryReporterBuilder(new StoryReporterBuilder().withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass)).withDefaultFormats().withFormats(CONSOLE, HTML))
+				.useStoryReporterBuilder(reporterBuilder)
 				.useParameterConverters(parameterConverters);
 	}
 
