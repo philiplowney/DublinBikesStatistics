@@ -62,7 +62,7 @@ public class RealTimeStories extends JUnitStories
 		
 		StoryReporterBuilder reporterBuilder = new StoryReporterBuilder()
 				.withCodeLocation(CodeLocations.codeLocationFromClass(embeddableClass))
-				.withDefaultFormats().withFormats(CONSOLE, Format.HTML_TEMPLATE, Format.HTML)
+				.withDefaultFormats().withFormats(CONSOLE, Format.HTML)
 				.withViewResources(viewResources);
 		return new MostUsefulConfiguration().useStoryLoader(new LoadFromClasspath(embeddableClass)).useStoryParser(new RegexStoryParser(examplesTableFactory))
 				.useStoryReporterBuilder(reporterBuilder)
