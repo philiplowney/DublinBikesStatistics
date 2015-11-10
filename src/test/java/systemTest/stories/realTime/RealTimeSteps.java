@@ -29,7 +29,7 @@ import systemTest.ws.WebServiceTest;
 public class RealTimeSteps extends Embedder
 {
 	private WebServiceHandler wsHandler = new WebServiceHandler(WebServiceTest.BASE_REST_ADDRESS);
-	private int totalQuantityOfStands = 0;
+	private int totalQuantityOfTestStands = 0;
 
 	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
@@ -49,13 +49,18 @@ public class RealTimeSteps extends Embedder
 		}
 		// Load the standard stand list from Json file
 		List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
-		// Save the standard stand list
-		for(Stand stand : stands)
+		List<Stand> subList = new ArrayList<>();
+		for(int i=0; i<stands.size(); i+=10)
+		{
+			subList.add(stands.get(i));
+		}
+		// Save a small, test-version of the list of stands
+		for(Stand stand : subList)
 		{
 			wsHandler.callCreateStand(stand);
 		}
-		totalQuantityOfStands = stands.size();
-		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfStands);
+		totalQuantityOfTestStands = subList.size();
+		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfTestStands);
 		new IndexPage().navToIndex();
 		LOGGER.info("Navigated to home page");
 	}
@@ -110,7 +115,7 @@ public class RealTimeSteps extends Embedder
 	public void thenAllStandsWillBeVisibleInATable()
 	{
 		int rows = tableViewPage.countRowsInTable();
-		Assert.assertEquals(totalQuantityOfStands, rows);
+		Assert.assertEquals(totalQuantityOfTestStands, rows);
 	}
 
 	@Then("all stands will have a capacity of $capacity")

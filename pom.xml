@@ -82,7 +82,7 @@
 						<configuration>
 							<scope>test</scope> <!-- Use the target/test-classes directory -->
 							<includes>
-								<include>**/RealTimeStories.java</include>
+								<include>**/*Stories*.java</include>
 							</includes>
 							<systemProperties>
 								<property>
