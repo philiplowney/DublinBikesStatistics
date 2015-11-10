@@ -18,6 +18,8 @@ import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.embedder.Embedder;
 import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import systemTest.tools.StandDescriptionFetcher;
 import systemTest.tools.WebServiceHandler;
@@ -184,9 +186,22 @@ public class RealTimeSteps extends Embedder
 	}
 
 	@Then("all stands are highlighted as $highlightType")
-	@Pending
-	public void thenAllStandsAreHighlightedAsempty(String highlightType)
+	public void thenAllStandsAreHighlightedAs(String highlightType)
 	{
-		// PENDING
+		List<WebElement> rows = tableViewPage.getTableRows();
+		for(WebElement row : rows)
+		{
+			List<WebElement> cells = row.findElements(By.cssSelector("td"));
+			if(highlightType.equalsIgnoreCase("full"))
+			{
+				// spaces should be red, third cell in row
+				Assert.assertTrue("Cell is not styled correctly even though the stand is full", cells.get(2).getAttribute("class").contains("full"));
+			}
+			if(highlightType.equalsIgnoreCase("empty"))
+			{
+				// stands should be red, second cell in row
+				Assert.assertTrue("Cell is not styled correctly even though the stand is empty", cells.get(1).getAttribute("class").contains("empty"));
+			}
+		}
 	}
 }

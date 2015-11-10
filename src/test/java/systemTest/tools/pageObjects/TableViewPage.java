@@ -42,4 +42,9 @@ public class TableViewPage extends BasePage
 		WebElement columnHeading = actionBot.getColumnHeadingCellFromTable(table, column);
 		columnHeading.click();
 	}
+
+	public List<WebElement> getTableRows()
+	{
+		return actionBot.getRowsInOnlyTableInScreen();
+	}
 }

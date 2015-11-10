@@ -29,10 +29,10 @@ Examples:
 Scenario: Highlight empty stands
 Given all the bike stands currently have a capacity of 20 and an occupancy of 0
 When the user navigates to the "real-time table" screen
-Then all stands are highlighted as "empty"
+Then all stands are highlighted as empty
 
 Scenario: Highlight full stands
 Given all the bike stands currently have a capacity of 10 and an occupancy of 10
 When the user navigates to the "real-time table" screen
-Then all stands are highlighted as "full"
+Then all stands are highlighted as full
 
