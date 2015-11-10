@@ -7,23 +7,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-<h:head>
-
-</h:head>
 <h:body>
 	<ui:composition template="resources/template.xhtml">
 		<ui:define name="pageTitle">Table View</ui:define>
 		<ui:define name="content">
+			<h:outputScript library="js" name="realTime/tableView.js"/>
+			<h:outputStylesheet library="css" name="realTime/tableView.css"/>
 			<h:form>
 				<p:dataTable value="#{tableViewUI.stands}" var="stand">
+					<p:ajax event="sort" oncomplete="updateClasses();"></p:ajax>
 					<p:column headerText="Stand" sortable="true" sortBy="#{stand.name}">
 						<h:outputText value="#{stand.name}" />
 					</p:column>
 					<p:column headerText="Bikes" width="80" sortable="true" sortBy="#{stand.state.bikesAvailable}">
-						<h:outputText value="#{stand.state.bikesAvailable}" />
+						<h:outputText value="#{stand.state.bikesAvailable}" styleClass="#{stand.state.bikesAvailable == 0 ? 'empty' : '' }"/>
 					</p:column>
 					<p:column headerText="Spaces" width="80" sortable="true" sortBy="#{stand.state.placesAvailable}">
-						<h:outputText value="#{stand.state.placesAvailable}" />
+						<h:outputText value="#{stand.state.placesAvailable}" styleClass="#{stand.state.placesAvailable == 0 ? 'full' : '' }" />
 					</p:column>
 				</p:dataTable>
 			</h:form>

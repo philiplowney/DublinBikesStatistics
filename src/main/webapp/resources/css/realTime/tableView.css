@@ -1,0 +1,9 @@
+td.full, td.empty
+{
+	background: red;
+}
+td.full span, td.empty span
+{
+	font-weight: bold;
+	color: white;
+}
