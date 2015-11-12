@@ -13,6 +13,8 @@ public class SystemTestHarness
 	
 	public WebServiceHandler wsHandler = new WebServiceHandler(APPUPDATE_REST_ADDRESS);
 
+	public static int NUMBER_OF_TEST_STANDS_CONFIGURED = 0;
+
 	public static final String APPUPDATE_REST_ADDRESS = "http://localhost:8080/DublinBikesAnalytics/rest/";
 	
 	public void placeStandsIntoSystem()
@@ -38,6 +40,7 @@ public class SystemTestHarness
 		{
 			wsHandler.callCreateStand(stand);
 		}
+		NUMBER_OF_TEST_STANDS_CONFIGURED = subList.size();
 		LOGGER.info("Stands saved in network - total quantity: "+subList.size());
 	}
 

@@ -16,7 +16,7 @@ public class TableViewPage extends BasePage
 
 	public int countRowsInTable()
 	{
-		return actionBot.countRowsInOnlyTableOnScreen();
+		return actionBot.waitAndThen().countRowsInOnlyTableOnScreen();
 	}
 
 	/**
@@ -24,7 +24,7 @@ public class TableViewPage extends BasePage
 	 */
 	public Map<String, StandState> getDisplayedStandStates()
 	{
-		List<WebElement> tableRows = actionBot.getRowsInOnlyTableInScreen();
+		List<WebElement> tableRows = actionBot.waitAndThen().getRowsInOnlyTableInScreen();
 		Map<String, StandState> result = new LinkedHashMap<>();
 		for (WebElement rowElement : tableRows)
 		{
@@ -37,13 +37,13 @@ public class TableViewPage extends BasePage
 
 	public void sortTableByColumn(String column)
 	{
-		WebElement table = actionBot.getOnlyTableInScreen();
+		WebElement table = actionBot.waitAndThen().getOnlyTableInScreen();
 		WebElement columnHeading = actionBot.getColumnHeadingCellFromTable(table, column);
 		columnHeading.click();
 	}
 
 	public List<WebElement> getTableRows()
 	{
-		return actionBot.getRowsInOnlyTableInScreen();
+		return actionBot.waitAndThen().getRowsInOnlyTableInScreen();
 	}
 }

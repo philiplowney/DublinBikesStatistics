@@ -24,7 +24,6 @@ import systemTest.tools.pageObjects.TableViewPage;
 
 public class RealTimeSteps extends Embedder
 {
-	private static final int NUMBER_OF_TEST_STANDS_CONFIGURED = 20;
 	public static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
 	private TableViewPage tableViewPage;
@@ -59,7 +58,6 @@ public class RealTimeSteps extends Embedder
 	public void whenTheUserNavigatesToScreen(String screenName) throws InterruptedException
 	{
 		tableViewPage = new IndexPage().getLeftMenu().navRealTimeTableView();
-		Thread.sleep(500);
 		LOGGER.info("I am looking at the table view page");
 	}
 
@@ -67,14 +65,13 @@ public class RealTimeSteps extends Embedder
 	public void whenTheUserOrdersTheTableBycolumn(String column) throws InterruptedException
 	{
 		tableViewPage.sortTableByColumn(column);
-		Thread.sleep(500);
 	}
 
 	@Then("all stands will be visible in a table")
 	public void thenAllStandsWillBeVisibleInATable()
 	{
 		int rows = tableViewPage.countRowsInTable();
-		Assert.assertEquals(NUMBER_OF_TEST_STANDS_CONFIGURED, rows);
+		Assert.assertEquals(SystemTestHarness.NUMBER_OF_TEST_STANDS_CONFIGURED, rows);
 	}
 
 	@Then("all stands will have a capacity of $capacity")

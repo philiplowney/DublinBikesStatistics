@@ -64,7 +64,7 @@ public class RealTimeStories extends JUnitStories
 	@Override
 	public InjectableStepsFactory stepsFactory()
 	{
-		return new InstanceStepsFactory(configuration(), new RealTimeSteps(), new PollingSteps());
+		return new InstanceStepsFactory(configuration(), new CommonSteps(), new RealTimeSteps(), new PollingSteps());
 	}
 
 	@Override
