@@ -39,6 +39,10 @@ public class SystemTestHarness
 			wsHandler.callCreateStand(stand);
 		}
 		LOGGER.info("Stands saved in network - total quantity: "+subList.size());
+	}
+
+	public void navigateToHomepage()
+	{
 		new IndexPage().navToIndex();
 		LOGGER.info("Navigated to home page");
 	}

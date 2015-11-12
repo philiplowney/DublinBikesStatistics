@@ -10,8 +10,6 @@ import java.util.logging.Logger;
 import model.Stand;
 import model.StandState;
 
-import org.jbehave.core.annotations.AfterStories;
-import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
@@ -23,7 +21,6 @@ import org.openqa.selenium.WebElement;
 import systemTest.tools.SystemTestHarness;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
-import systemTest.tools.selenium.WebDriverManager;
 
 public class RealTimeSteps extends Embedder
 {
@@ -33,17 +30,7 @@ public class RealTimeSteps extends Embedder
 	private TableViewPage tableViewPage;
 	private SystemTestHarness testHarness = new SystemTestHarness();
 	
-	@BeforeStories
-	public void setUpEachStory()
-	{
-		testHarness.placeStandsIntoSystem();
-	}
 
-	@AfterStories
-	public void tidyUpAfterStories()
-	{
-		WebDriverManager.getInstance().shutDown();
-	}
 
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
