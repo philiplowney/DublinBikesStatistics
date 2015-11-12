@@ -6,7 +6,6 @@ import static org.jbehave.core.reporters.Format.CONSOLE;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
@@ -33,8 +32,6 @@ import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 @RunWith(JUnitReportingRunner.class)
 public class RealTimeStories extends JUnitStories
 {
-	private static final Logger LOGGER = Logger.getLogger(RealTimeStories.class.getCanonicalName());
-
 	public RealTimeStories()
 	{
 		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true);

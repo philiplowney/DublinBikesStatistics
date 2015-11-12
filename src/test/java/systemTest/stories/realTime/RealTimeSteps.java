@@ -29,8 +29,6 @@ public class RealTimeSteps extends Embedder
 
 	private TableViewPage tableViewPage;
 	private SystemTestHarness testHarness = new SystemTestHarness();
-	
-
 
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
