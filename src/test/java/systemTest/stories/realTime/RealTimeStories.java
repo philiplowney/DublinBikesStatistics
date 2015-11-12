@@ -6,6 +6,7 @@ import static org.jbehave.core.reporters.Format.CONSOLE;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
@@ -26,20 +27,14 @@ import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 import org.junit.runner.RunWith;
 
+import systemTest.stories.polling.PollingSteps;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
-/**
- * <p>
- * {@link Embeddable} class to run multiple textual stories via JUnit.
- * </p>
- * <p>
- * Stories are specified in classpath and correspondingly the
- * {@link LoadFromClasspath} story loader is configured.
- * </p>
- */
 @RunWith(JUnitReportingRunner.class)
 public class RealTimeStories extends JUnitStories
 {
+	private static final Logger LOGGER = Logger.getLogger(RealTimeStories.class.getCanonicalName());
+
 	public RealTimeStories()
 	{
 		configuredEmbedder().embedderControls().doGenerateViewAfterStories(true).doIgnoreFailureInStories(true).doIgnoreFailureInView(true);
@@ -72,14 +67,16 @@ public class RealTimeStories extends JUnitStories
 	@Override
 	public InjectableStepsFactory stepsFactory()
 	{
-		return new InstanceStepsFactory(configuration(), new RealTimeSteps());
+		return new InstanceStepsFactory(configuration(), new RealTimeSteps(), new PollingSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths()
 	{
 		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
-
+		//return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Data.story", "**/excluded*.story");
 	}
 
+	
+	
 }

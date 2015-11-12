@@ -1,13 +1,12 @@
 package systemTest.tools.pageObjects;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openqa.selenium.WebElement;
-
 import model.StandState;
+
+import org.openqa.selenium.WebElement;
 
 public class TableViewPage extends BasePage
 {

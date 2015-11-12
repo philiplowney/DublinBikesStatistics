@@ -13,7 +13,6 @@ import model.StandState;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.embedder.Embedder;
@@ -21,52 +20,25 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import systemTest.tools.StandDescriptionFetcher;
-import systemTest.tools.WebServiceHandler;
+import systemTest.tools.SystemTestHarness;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
 import systemTest.tools.selenium.WebDriverManager;
-import systemTest.ws.WebServiceTest;
 
 public class RealTimeSteps extends Embedder
 {
-	private WebServiceHandler wsHandler = new WebServiceHandler(WebServiceTest.BASE_REST_ADDRESS);
-	private int totalQuantityOfTestStands = 0;
-
-	private static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
+	private static final int NUMBER_OF_TEST_STANDS_CONFIGURED = 20;
+	public static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
 
 	private TableViewPage tableViewPage;
-
+	private SystemTestHarness testHarness = new SystemTestHarness();
+	
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		// Delete existing stands
-		List<Stand> allExtantStands = wsHandler.callListStands();
-		if(!allExtantStands.isEmpty())
-		{
-			for(Stand extantStandToDelete: allExtantStands)
-			{
-				wsHandler.callDeleteStand(extantStandToDelete.getNumber());
-			}
-		}
-		// Load the standard stand list from Json file
-		List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
-		List<Stand> subList = new ArrayList<>();
-		for(int i=0; i<stands.size(); i+=10)
-		{
-			subList.add(stands.get(i));
-		}
-		// Save a small, test-version of the list of stands
-		for(Stand stand : subList)
-		{
-			wsHandler.callCreateStand(stand);
-		}
-		totalQuantityOfTestStands = subList.size();
-		LOGGER.info("Stands saved in network - total quantity: "+totalQuantityOfTestStands);
-		new IndexPage().navToIndex();
-		LOGGER.info("Navigated to home page");
+		testHarness.placeStandsIntoSystem();
 	}
-	
+
 	@AfterStories
 	public void tidyUpAfterStories()
 	{
@@ -76,13 +48,13 @@ public class RealTimeSteps extends Embedder
 	@Given("the bike stands have random capacity and occupancy")
 	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
 	{
-		List<Stand> allStands = wsHandler.callListStands();
+		List<Stand> allStands = testHarness.getWebServiceUpdater().callListStands();
 		Random rand = new Random();
 		for(Stand stand : allStands)
 		{
 			int spaces = rand.nextInt(21);
 			int bikes = rand.nextInt(21);
-			wsHandler.callUpdateStand(stand.getNumber(), bikes, spaces);
+			testHarness.getWebServiceUpdater().callUpdateStand(stand.getNumber(), bikes, spaces);
 		}
 		LOGGER.info("Stands configured with random states");
 	}
@@ -90,10 +62,10 @@ public class RealTimeSteps extends Embedder
 	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
 	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy)
 	{
-		List<Stand> allStands = wsHandler.callListStands();
+		List<Stand> allStands = testHarness.getWebServiceUpdater().callListStands();
 		for(Stand stand : allStands)
 		{
-			wsHandler.callUpdateStand(stand.getNumber(), occupancy, capacity-occupancy);
+			testHarness.getWebServiceUpdater().callUpdateStand(stand.getNumber(), occupancy, capacity-occupancy);
 		}
 		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
 	}
@@ -117,7 +89,7 @@ public class RealTimeSteps extends Embedder
 	public void thenAllStandsWillBeVisibleInATable()
 	{
 		int rows = tableViewPage.countRowsInTable();
-		Assert.assertEquals(totalQuantityOfTestStands, rows);
+		Assert.assertEquals(NUMBER_OF_TEST_STANDS_CONFIGURED, rows);
 	}
 
 	@Then("all stands will have a capacity of $capacity")

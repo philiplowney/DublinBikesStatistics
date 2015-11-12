@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import systemTest.tools.SystemTestHarness;
 import systemTest.tools.WebServiceHandler;
 
 import com.sun.jersey.api.client.ClientResponse;
@@ -25,7 +26,6 @@ import com.sun.jersey.api.client.ClientResponse.Status;
  */
 public class WebServiceTest
 {
-	public static final String BASE_REST_ADDRESS = "http://localhost:8080/DublinBikesAnalytics/rest/";
 	private static WebServiceHandler wsHandler;
 	private static final int TEST_STAND_NUMBER = 999;
 	private static Stand testStand;
@@ -35,7 +35,7 @@ public class WebServiceTest
 	{
 		testStand = new Stand(TEST_STAND_NUMBER, "test stand", "123 some street", 1, 1);
 		testStand.setState(new StandState(Date.from(Instant.now()), 10, 10));
-		wsHandler = new WebServiceHandler(BASE_REST_ADDRESS);
+		wsHandler = new WebServiceHandler(SystemTestHarness.APPUPDATE_REST_ADDRESS);
 	}
 	
 	@Before
