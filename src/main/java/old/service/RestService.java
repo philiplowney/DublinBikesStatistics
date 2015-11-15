@@ -40,7 +40,7 @@ public class RestService
 		return stands;
 	}
 
-	@PUT
+	@GET
 	@Path("updateStand/{"+PARAM_STAND_NUMBER+"}/{"+PARAM_BIKES+"}/{"+PARAM_PLACES+"}")
 	@Consumes({ MediaType.TEXT_PLAIN })
 	public Response updateStand(

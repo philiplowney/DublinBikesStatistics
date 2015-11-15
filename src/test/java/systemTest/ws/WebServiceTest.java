@@ -3,6 +3,9 @@ package systemTest.ws;
 import java.time.Instant;
 import java.util.Date;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import model.Stand;
 import model.StandState;
 
@@ -14,8 +17,6 @@ import org.junit.Test;
 import systemTest.tools.SystemTestHarness;
 import systemTest.tools.WebServiceHandler;
 
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.ClientResponse.Status;
 
 /**
  * Simple test of the webservice for creating/deleting stands (for, ironically,
@@ -47,7 +48,7 @@ public class WebServiceTest
 	@Test
 	public void testCreate()
 	{
-		ClientResponse response = wsHandler.callCreateStand(testStand);
+		Response response = wsHandler.callCreateStand(testStand);
 		Assert.assertEquals(Status.CREATED.getStatusCode(), response.getStatus());
 	}
 
@@ -55,7 +56,7 @@ public class WebServiceTest
 	public void testDelete()
 	{
 		wsHandler.callCreateStand(testStand);
-		ClientResponse response = wsHandler.callDeleteStand(TEST_STAND_NUMBER);
+		Response response = wsHandler.callDeleteStand(TEST_STAND_NUMBER);
 		Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
 	}
 	
@@ -84,7 +85,7 @@ public class WebServiceTest
 		wsHandler.callCreateStand(testStand);
 		int newNumBikes = 33;
 		int newNumSpaces = 17;
-		ClientResponse response = wsHandler.callUpdateStand(TEST_STAND_NUMBER, newNumBikes, newNumSpaces);
+		Response response = wsHandler.callUpdateStand(TEST_STAND_NUMBER, newNumBikes, newNumSpaces);
 		Stand updatedStand = wsHandler.callFetchStand(TEST_STAND_NUMBER);
 		Assert.assertEquals(Status.OK.getStatusCode(), response.getStatus());
 		Assert.assertEquals(newNumBikes, updatedStand.getState().getBikesAvailable());

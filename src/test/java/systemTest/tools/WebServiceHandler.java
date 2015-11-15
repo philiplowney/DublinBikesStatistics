@@ -2,14 +2,15 @@ package systemTest.tools;
 
 import java.util.List;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import model.Stand;
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.GenericType;
-import com.sun.jersey.api.client.WebResource;
 
 /**
  * Utility class for calling the DB Analytics webservice for adding, deleting &
@@ -21,41 +22,46 @@ import com.sun.jersey.api.client.WebResource;
 public class WebServiceHandler
 {
 	private Client client;
-	private WebResource webResource;
+	private WebTarget webTarget;
 
 	public WebServiceHandler(final String baseAddress)
 	{
-		client = Client.create();
-		webResource = client.resource(baseAddress);
+		client = ClientBuilder.newClient();
+		webTarget = client.target(baseAddress);
 	}
 
-	public ClientResponse callCreateStand(final Stand testStand)
+	public Response callCreateStand(final Stand testStand)
 	{
-		ClientResponse response = webResource.path("addNewStand").type(MediaType.TEXT_XML).put(ClientResponse.class, testStand);
+		Response response = webTarget
+				.path("addNewStand")
+				.request()
+				.put(Entity.entity(testStand, MediaType.TEXT_XML), Response.class);
 		return response;
 	}
 
-	public ClientResponse callDeleteStand(final int testStandNumber)
+	public Response callDeleteStand(final int testStandNumber)
 	{
-		ClientResponse response = webResource.path("deleteStand").path("" + testStandNumber).delete(ClientResponse.class);
+		Response response = webTarget.path("deleteStand").path("" + testStandNumber).request().delete();
 		return response;
 	}
 
 	public List<Stand> callListStands()
 	{
-		List<Stand> result = webResource.path("fetchStands").getRequestBuilder().accept(MediaType.TEXT_XML).get(new GenericType<List<Stand>>(){});
+		List<Stand> result = webTarget.path("fetchStands").request().get(new GenericType<List<Stand>>(){});
 		return result;
 	}
 
 	public Stand callFetchStand(int standNumber)
 	{
-		Stand result = webResource.path("fetchStand").path(""+standNumber).getRequestBuilder().accept(MediaType.TEXT_XML).get(Stand.class);
+		Stand result = webTarget.path("fetchStand").path(""+standNumber).request().accept(MediaType.TEXT_XML).get(Stand.class);
 		return result;
 	}
 
-	public ClientResponse callUpdateStand(int testStandNumber, int newNumBikes, int newNumSpaces)
+	public Response callUpdateStand(int testStandNumber, int newNumBikes, int newNumSpaces)
 	{
-		ClientResponse response = webResource.path("updateStand").path(""+testStandNumber).path(""+newNumBikes).path(""+newNumSpaces).put(ClientResponse.class);
+		Response response = webTarget.path("updateStand").path(""+testStandNumber).path(""+newNumBikes).path(""+newNumSpaces)
+				.request()
+				.get();
 		return response;
 	}
 }
