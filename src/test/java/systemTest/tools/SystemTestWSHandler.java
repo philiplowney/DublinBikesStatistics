@@ -19,12 +19,12 @@ import model.Stand;
  * @author Philip
  *
  */
-public class WebServiceHandler
+public class SystemTestWSHandler
 {
 	private Client client;
 	private WebTarget webTarget;
 
-	public WebServiceHandler(final String baseAddress)
+	public SystemTestWSHandler(final String baseAddress)
 	{
 		client = ClientBuilder.newClient();
 		webTarget = client.target(baseAddress);
@@ -39,15 +39,9 @@ public class WebServiceHandler
 		return response;
 	}
 
-	public Response callDeleteStand(final int testStandNumber)
-	{
-		Response response = webTarget.path("deleteStand").path("" + testStandNumber).request().delete();
-		return response;
-	}
-
 	public List<Stand> callListStands()
 	{
-		List<Stand> result = webTarget.path("fetchStands").request().get(new GenericType<List<Stand>>(){});
+		List<Stand> result = webTarget.path("fetchStands").request().accept(MediaType.TEXT_XML).get(new GenericType<List<Stand>>(){});
 		return result;
 	}
 

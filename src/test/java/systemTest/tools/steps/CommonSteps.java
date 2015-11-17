@@ -1,4 +1,4 @@
-package systemTest.stories.realTime;
+package systemTest.tools.steps;
 
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
@@ -13,7 +13,7 @@ public class CommonSteps
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		testHarness.placeStandsIntoSystem();
+		testHarness.ensureStandsAreInSystem();
 		testHarness.navigateToHomepage();
 	}
 

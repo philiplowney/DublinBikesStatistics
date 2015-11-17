@@ -1,40 +1,45 @@
-package systemTest.stories.polling;
+package systemTest.tools.steps;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.givenThat;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlMatching;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
-import org.junit.Assert;
-
-import service.SystemProperties;
-import service.SystemProperties.SystemProperty;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
-import com.github.tomakehurst.wiremock.verification.LoggedRequest;
+
+import constants.SystemProperties;
+import constants.SystemProperties.SystemProperty;
 
 public class PollingSteps
 {
+	private static final String URL_MATCHER_STATIONS_SERVICE = "/vls/v1/stations.*";
 	private static final Logger LOGGER = Logger.getLogger(PollingSteps.class.getCanonicalName());
 	private WireMockServer wireMockServer;
 
-	@Given("a test JC Deceaux webservice is listening at http://localhost:$port")
-	public void givenATestJCDeceauxWebserviceIsListeningAtHttplocalhost(int port)
+	@Given("a test JC Deceaux webservice is listening")
+	public void givenATestJCDeceauxWebserviceIsListening()
 	{
-		WireMock.configureFor("localhost", port);
-		wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(port));
+		WireMock.configureFor("localhost", 9000);
+		wireMockServer = new WireMockServer(WireMockConfiguration.wireMockConfig().port(9000));
 		wireMockServer.start();
-		System.out.println("Mocked webserver running on port "+port+"...");
-		LOGGER.info("Dummy webserver set up to receive requests on port " + 9000);
-		givenThat(get(urlMatching("/thing")).willReturn(aResponse().withStatus(200).withBody("mock stub thing is working")));
-		System.out.println("Mock is working");
+		givenThat(get(urlMatching(URL_MATCHER_STATIONS_SERVICE)).willReturn(aResponse().withStatus(200).withBody("mock stub thing is working")));
+	}
+	
+	@Given("the test JC Deceaux webservice says all stands are have a capacity of <capacity> and an occupancy of <occupancy>")
+	public void givenTheTestJCDeceauxWebserviceSaysAllStandsAreHaveACapacityOfcapacityAndAnOccupancyOfoccupancy() {
+	  // PENDING
+	}
+
+	@Given("the webservice has been polled")
+	public void givenTheWebserviceHasBeenPolled() {
+	  // PENDING
 	}
 	
 	@Then("the webservice is polled periodically")
@@ -44,12 +49,11 @@ public class PollingSteps
 		int pollingPeriodSeconds = Integer.parseInt(pollingPeriodProperty);
 		LOGGER.info("Expecting to be polled every "+pollingPeriodSeconds+" seconds.");
 		int numberOfPollsToWaitFor = 4;
-		long millisecondsToSleep = (pollingPeriodSeconds*1000*numberOfPollsToWaitFor)+980l; 
+		long millisecondsToSleep = (pollingPeriodSeconds*1000*numberOfPollsToWaitFor)+10l; 
 		LOGGER.info("Going to sleep for exactly "+millisecondsToSleep+" to see how many webservice requests were received. Expecting "+numberOfPollsToWaitFor);
 		WireMock.resetAllRequests();
 		Thread.sleep(millisecondsToSleep);
-		List<LoggedRequest> requests = WireMock.findAll(WireMock.getRequestedFor(urlMatching("/thing")));
-		Assert.assertTrue("No requests received to webservice ", requests.size()>0);
-		Assert.assertEquals("Wrong number of requests received ", numberOfPollsToWaitFor, requests.size());
+		WireMock.verify(numberOfPollsToWaitFor, WireMock.getRequestedFor(WireMock.urlMatching(URL_MATCHER_STATIONS_SERVICE)));
+		
 	}
 }

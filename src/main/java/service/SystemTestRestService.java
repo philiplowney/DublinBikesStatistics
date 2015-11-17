@@ -1,4 +1,4 @@
-package old.service;
+package service;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import persistence.dao.StandDAO;
 
 @Path("/")
 @Stateless
-public class RestService
+public class SystemTestRestService
 {
 	private static final String PARAM_PLACES = "places";
 	private static final String PARAM_BIKES = "bikes";

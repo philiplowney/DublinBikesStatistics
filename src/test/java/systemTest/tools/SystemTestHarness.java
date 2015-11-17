@@ -11,37 +11,38 @@ public class SystemTestHarness
 {
 	private static final Logger LOGGER = Logger.getLogger(SystemTestHarness.class.getCanonicalName());
 	
-	public WebServiceHandler wsHandler = new WebServiceHandler(APPUPDATE_REST_ADDRESS);
+	public SystemTestWSHandler wsHandler = new SystemTestWSHandler(APPUPDATE_REST_ADDRESS);
 
 	public static int NUMBER_OF_TEST_STANDS_CONFIGURED = 0;
 
 	public static final String APPUPDATE_REST_ADDRESS = "http://localhost:8080/DublinBikesAnalytics/rest/";
 	
-	public void placeStandsIntoSystem()
+	public void ensureStandsAreInSystem()
 	{
 		// Delete existing stands
 		List<Stand> allExtantStands = wsHandler.callListStands();
-		if(!allExtantStands.isEmpty())
+		if(allExtantStands.isEmpty())
 		{
-			for(Stand extantStandToDelete: allExtantStands)
+			// Load the standard stand list from Json file
+			List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
+			List<Stand> subList = new ArrayList<>();
+			for(int i=0; i<stands.size(); i+=10)
 			{
-				wsHandler.callDeleteStand(extantStandToDelete.getNumber());
+				subList.add(stands.get(i));
 			}
+			// Save a small, test-version of the list of stands
+			for(Stand stand : subList)
+			{
+				wsHandler.callCreateStand(stand);
+			}
+			LOGGER.info("Stands saved in network - total quantity: "+subList.size());
+			NUMBER_OF_TEST_STANDS_CONFIGURED = subList.size();
 		}
-		// Load the standard stand list from Json file
-		List<Stand> stands = StandDescriptionFetcher.getInstance().getDescriptions();
-		List<Stand> subList = new ArrayList<>();
-		for(int i=0; i<stands.size(); i+=10)
+		else
 		{
-			subList.add(stands.get(i));
+			NUMBER_OF_TEST_STANDS_CONFIGURED = allExtantStands.size();
 		}
-		// Save a small, test-version of the list of stands
-		for(Stand stand : subList)
-		{
-			wsHandler.callCreateStand(stand);
-		}
-		NUMBER_OF_TEST_STANDS_CONFIGURED = subList.size();
-		LOGGER.info("Stands saved in network - total quantity: "+subList.size());
+		
 	}
 
 	public void navigateToHomepage()
@@ -50,7 +51,7 @@ public class SystemTestHarness
 		LOGGER.info("Navigated to home page");
 	}
 
-	public WebServiceHandler getWebServiceUpdater()
+	public SystemTestWSHandler getWebServiceUpdater()
 	{
 		return wsHandler;
 	}

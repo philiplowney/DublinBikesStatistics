@@ -1,4 +1,4 @@
-package service;
+package constants;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,7 +12,9 @@ public class SystemProperties
 	public enum SystemProperty
 	{
 		REST_SERVICE_ADDRESS("restservice.address"),
-		REST_SERVICE_POLLING_PERIOD_SECONDS("restservice.polling.period");
+		REST_SERVICE_POLLING_PERIOD_SECONDS("restservice.polling.period"),
+		CONTRACT_NAME("restservice.contractname"),
+		API_KEY("restservice.apikey");
 		
 		private String string;
 

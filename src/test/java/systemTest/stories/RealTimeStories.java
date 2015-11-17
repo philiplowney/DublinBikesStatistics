@@ -1,4 +1,4 @@
-package systemTest.stories.realTime;
+package systemTest.stories;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 import static org.jbehave.core.reporters.Format.CONSOLE;
@@ -26,7 +26,9 @@ import org.jbehave.core.steps.ParameterConverters.DateConverter;
 import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 import org.junit.runner.RunWith;
 
-import systemTest.stories.polling.PollingSteps;
+import systemTest.tools.steps.CommonSteps;
+import systemTest.tools.steps.PollingSteps;
+import systemTest.tools.steps.RealTimeSteps;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -64,14 +66,15 @@ public class RealTimeStories extends JUnitStories
 	@Override
 	public InjectableStepsFactory stepsFactory()
 	{
-		return new InstanceStepsFactory(configuration() /*new CommonSteps(), new RealTimeSteps()*/, new PollingSteps());
+		//return new InstanceStepsFactory(configuration() /*new CommonSteps(), new RealTimeSteps()*/, new PollingSteps());
+		return new InstanceStepsFactory(configuration(), new CommonSteps(), new RealTimeSteps(), new PollingSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths()
 	{
+		//return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
 		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Data.story", "**/excluded*.story");
-		//return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Data.story", "**/excluded*.story");
 	}
 
 	
