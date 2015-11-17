@@ -45,12 +45,12 @@ public class PollingSteps
 	@Then("the webservice is polled periodically")
 	public void  thenTheWebserviceIsPolledPeriodically() throws InterruptedException
 	{
-		String pollingPeriodProperty = SystemProperties.getInstance().getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_SECONDS);
-		int pollingPeriodSeconds = Integer.parseInt(pollingPeriodProperty);
-		LOGGER.info("Expecting to be polled every "+pollingPeriodSeconds+" seconds.");
+		String pollingPeriodProperty = SystemProperties.getInstance().getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_MILLISECONDS);
+		int pollingPeriodMilliseconds = Integer.parseInt(pollingPeriodProperty);
+		LOGGER.info("Expecting to be polled every "+pollingPeriodMilliseconds+" seconds.");
 		int numberOfPollsToWaitFor = 4;
-		long millisecondsToSleep = (pollingPeriodSeconds*1000*numberOfPollsToWaitFor)+10l; 
-		LOGGER.info("Going to sleep for exactly "+millisecondsToSleep+" to see how many webservice requests were received. Expecting "+numberOfPollsToWaitFor);
+		long millisecondsToSleep = (pollingPeriodMilliseconds*numberOfPollsToWaitFor)+10l; 
+		LOGGER.info("Going to sleep for exactly "+millisecondsToSleep+"ms to see how many webservice requests were received. Expecting "+numberOfPollsToWaitFor);
 		WireMock.resetAllRequests();
 		Thread.sleep(millisecondsToSleep);
 		WireMock.verify(numberOfPollsToWaitFor, WireMock.getRequestedFor(WireMock.urlMatching(URL_MATCHER_STATIONS_SERVICE)));

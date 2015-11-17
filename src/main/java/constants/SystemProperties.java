@@ -12,7 +12,7 @@ public class SystemProperties
 	public enum SystemProperty
 	{
 		REST_SERVICE_ADDRESS("restservice.address"),
-		REST_SERVICE_POLLING_PERIOD_SECONDS("restservice.polling.period"),
+		REST_SERVICE_POLLING_PERIOD_MILLISECONDS("restservice.polling.period.ms"),
 		CONTRACT_NAME("restservice.contractname"),
 		API_KEY("restservice.apikey");
 		

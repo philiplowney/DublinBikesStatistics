@@ -45,10 +45,10 @@ public class PollingService
 		contractName = props.getProperty(SystemProperty.CONTRACT_NAME);
 		webServiceAddress = props.getProperty(SystemProperty.REST_SERVICE_ADDRESS);
 		jcDeceauxAPIBaseTarget = client.target(webServiceAddress);
-		int pollingPeriodSeconds = Integer.parseInt(props
-				.getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_SECONDS));
-		timer = timerService.createIntervalTimer(pollingPeriodSeconds*1000, pollingPeriodSeconds*1000, new TimerConfig());
-		LOGGER.info("Shall start polling the webservice every "+pollingPeriodSeconds+" seconds...");
+		long pollingPeriodMilliseconds = Long.parseLong(props
+				.getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_MILLISECONDS));
+		timer = timerService.createIntervalTimer(pollingPeriodMilliseconds, pollingPeriodMilliseconds, new TimerConfig());
+		LOGGER.info("Shall start polling the webservice every "+pollingPeriodMilliseconds+" seconds...");
 		
 	}
 	
