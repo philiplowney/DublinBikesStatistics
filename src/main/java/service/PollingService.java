@@ -39,6 +39,8 @@ public class PollingService
 	@PostConstruct
 	public void start()
 	{
+		// To reduce the minimum polling interval below 1,000 ms, see the Glassfish tip here:
+		// https://docs.oracle.com/javaee/6/tutorial/doc/bnboy.html
 		Client client = ClientBuilder.newClient();
 		SystemProperties props = SystemProperties.getInstance();
 		apiKey = props.getProperty(SystemProperty.API_KEY);
@@ -48,8 +50,7 @@ public class PollingService
 		long pollingPeriodMilliseconds = Long.parseLong(props
 				.getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_MILLISECONDS));
 		timer = timerService.createIntervalTimer(pollingPeriodMilliseconds, pollingPeriodMilliseconds, new TimerConfig());
-		LOGGER.info("Shall start polling the webservice every "+pollingPeriodMilliseconds+" seconds...");
-		
+		LOGGER.info("Shall start polling the webservice every "+pollingPeriodMilliseconds+" milliseconds...");
 	}
 	
 	@PreDestroy
@@ -64,10 +65,9 @@ public class PollingService
 	{
 		try
 		{
+			LOGGER.log(Level.INFO, "Querying the webservice...");
 			WebTarget fullTarget = jcDeceauxAPIBaseTarget.path("stations").queryParam("contract", contractName).queryParam("apiKey", apiKey);
-			LOGGER.info("I am now polling the webservice @ "+fullTarget.getUri());
 			String response = fullTarget.request().get(String.class);
-			LOGGER.info("Response: "+response);
 		}
 		catch(Exception e)
 		{

@@ -3,18 +3,20 @@ package systemTest.tools.steps;
 import org.jbehave.core.annotations.AfterStories;
 import org.jbehave.core.annotations.BeforeStories;
 
-import systemTest.tools.SystemTestHarness;
+import systemTest.tools.WebServiceMock;
+import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.selenium.WebDriverManager;
 
 public class CommonSteps
 {
-	private SystemTestHarness testHarness = new SystemTestHarness();
+	private WebServiceMock testHarness = WebServiceMock.getInstance();
 
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		testHarness.ensureStandsAreInSystem();
-		testHarness.navigateToHomepage();
+		//TODO: restore
+		//testHarness.ensureStandsAreInSystem();
+		new IndexPage().navToIndex();
 	}
 
 	@AfterStories
