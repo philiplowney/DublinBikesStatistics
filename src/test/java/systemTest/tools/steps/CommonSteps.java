@@ -9,13 +9,10 @@ import systemTest.tools.selenium.WebDriverManager;
 
 public class CommonSteps
 {
-	private WebServiceMock testHarness = WebServiceMock.getInstance();
-
 	@BeforeStories
 	public void setUpEachStory()
 	{
-		//TODO: restore
-		//testHarness.ensureStandsAreInSystem();
+		WebServiceMock.getInstance();
 		new IndexPage().navToIndex();
 	}
 

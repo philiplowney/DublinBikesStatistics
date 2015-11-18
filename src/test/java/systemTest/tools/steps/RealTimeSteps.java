@@ -1,17 +1,18 @@
 package systemTest.tools.steps;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import model.Stand;
 import model.StandState;
 
 import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.embedder.Embedder;
@@ -19,10 +20,13 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import systemTest.tools.WebServiceMock;
+import service.model.jcdeceaux.JCDeceauxStandModel;
 import systemTest.tools.SystemTestWSHandler;
+import systemTest.tools.WebServiceMock;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
+import constants.SystemProperties;
+import constants.SystemProperties.SystemProperty;
 
 public class RealTimeSteps extends Embedder
 {
@@ -32,31 +36,49 @@ public class RealTimeSteps extends Embedder
 
 	public SystemTestWSHandler wsHandler = new SystemTestWSHandler(APPUPDATE_REST_ADDRESS);
 	public static final String APPUPDATE_REST_ADDRESS = "http://localhost:8080/DublinBikesAnalytics/rest/";
+
+	private void sleepForPollingPeriod()
+	{
+		long pollingPeriodMillis = Long.parseLong(SystemProperties.getInstance().getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_MILLISECONDS));
+		try
+		{
+			Thread.sleep(pollingPeriodMillis);
+		}
+		catch (InterruptedException e)
+		{
+			LOGGER.log(Level.WARNING, "Unable to sleep for polling period", e);
+		}
+	}
 	
 	@Given("the bike stands have random capacity and occupancy")
-	@Pending
-	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy()
+	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy() throws URISyntaxException, IOException
 	{
-		List<Stand> allStands = wsHandler.callListStands();
+		List<JCDeceauxStandModel> defaultStandsAltered = WebServiceMock.getInstance().generateRealWorldSample();
+		
 		Random rand = new Random();
-		for(Stand stand : allStands)
+		for(JCDeceauxStandModel stand : defaultStandsAltered)
 		{
 			int spaces = rand.nextInt(21);
 			int bikes = rand.nextInt(21);
-			//wsHandler.callUpdateStand(stand.getNumber(), bikes, spaces);
+			stand.setAvailable_bikes(bikes);
+			stand.setAvailable_bike_stands(spaces);
 		}
-		LOGGER.info("Stands configured with random states");
+		WebServiceMock.getInstance().configureToReturn(defaultStandsAltered);
+		sleepForPollingPeriod();
+		LOGGER.info("Mock webservice configured to return randomised stand states for "+defaultStandsAltered.size()+" stands");
 	}
 
 	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
-	@Pending
-	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy)
+	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy) throws URISyntaxException, IOException
 	{
-		List<Stand> allStands = wsHandler.callListStands();
-		for(Stand stand : allStands)
+		List<JCDeceauxStandModel> defaultStandsAltered = WebServiceMock.getInstance().generateRealWorldSample();
+		for(JCDeceauxStandModel stand : defaultStandsAltered)
 		{
-			//wsHandler.callUpdateStand(stand.getNumber(), occupancy, capacity-occupancy);
+			stand.setAvailable_bikes(occupancy);
+			stand.setAvailable_bike_stands(capacity-occupancy);
 		}
+		WebServiceMock.getInstance().configureToReturn(defaultStandsAltered);
+		sleepForPollingPeriod();
 		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
 	}
 
