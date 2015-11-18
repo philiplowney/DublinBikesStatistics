@@ -66,15 +66,14 @@ public class RealTimeStories extends JUnitStories
 	@Override
 	public InjectableStepsFactory stepsFactory()
 	{
-		//return new InstanceStepsFactory(configuration() /*new CommonSteps(), new RealTimeSteps()*/, new PollingSteps());
 		return new InstanceStepsFactory(configuration(), new CommonSteps(), new RealTimeSteps(), new PollingSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths()
 	{
-		//return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
-		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Data.story", "**/excluded*.story");
+		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*.story", "**/excluded*.story");
+		//return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Data.story", "**/excluded*.story");
 	}
 
 	

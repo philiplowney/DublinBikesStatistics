@@ -21,7 +21,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import service.model.jcdeceaux.JCDeceauxStandModel;
-import systemTest.tools.SystemTestWSHandler;
 import systemTest.tools.WebServiceMock;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
@@ -31,11 +30,7 @@ import constants.SystemProperties.SystemProperty;
 public class RealTimeSteps extends Embedder
 {
 	public static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
-
 	private TableViewPage tableViewPage;
-
-	public SystemTestWSHandler wsHandler = new SystemTestWSHandler(APPUPDATE_REST_ADDRESS);
-	public static final String APPUPDATE_REST_ADDRESS = "http://localhost:8080/DublinBikesAnalytics/rest/";
 
 	private void sleepForPollingPeriod()
 	{
@@ -99,7 +94,7 @@ public class RealTimeSteps extends Embedder
 	public void thenAllStandsWillBeVisibleInATable()
 	{
 		int rows = tableViewPage.countRowsInTable();
-		Assert.assertEquals(WebServiceMock.NUMBER_OF_TEST_STANDS_CONFIGURED, rows);
+		Assert.assertEquals(WebServiceMock.getInstance().getCurrentReturnSample().size(), rows);
 	}
 
 	@Then("all stands will have a capacity of $capacity")

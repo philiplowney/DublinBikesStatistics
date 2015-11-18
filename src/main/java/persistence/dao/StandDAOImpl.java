@@ -27,4 +27,12 @@ public class StandDAOImpl extends GenericDAOImpl<Stand> implements StandDAO
 		query.setParameter(Stand.QUERY_PARAMETER_STAND_NUMBER, standNumber);
 		return query.getSingleResult();
 	}
+
+	@Override
+	public boolean doesStandExistWithNumber(int number)
+	{
+		TypedQuery<Long> query = em.createNamedQuery(Stand.NAMED_QUERY_COUNT_WITH_NUMBER, Long.class);
+		query.setParameter(Stand.QUERY_PARAMETER_STAND_NUMBER, number);
+		return query.getSingleResult()>0;
+	}
 }

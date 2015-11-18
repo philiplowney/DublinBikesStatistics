@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,7 +20,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@NamedQuery(name = Stand.NAMED_QUERY_FIND_BY_NUMBER, query = "SELECT s FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER)
+@NamedQueries({
+	@NamedQuery(name = Stand.NAMED_QUERY_FIND_BY_NUMBER, query = "SELECT s FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER),
+	@NamedQuery(name = Stand.NAMED_QUERY_COUNT_WITH_NUMBER, query = "SELECT count(s.id) FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER)
+})
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Stand implements Serializable
@@ -60,4 +64,6 @@ public class Stand implements Serializable
 	public static final String QUERY_PARAMETER_STAND_NUMBER = "number";
 
 	public static final String NAMED_QUERY_FIND_BY_NUMBER = "Stand.findByNumber";
+
+	public static final String NAMED_QUERY_COUNT_WITH_NUMBER = "Stand.countWithNumber";
 }

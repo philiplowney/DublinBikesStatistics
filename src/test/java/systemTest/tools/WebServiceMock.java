@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lombok.Getter;
 import service.model.jcdeceaux.JCDeceauxStandModel;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -32,8 +33,9 @@ public class WebServiceMock
 	private static final String SERVER_ADDRESS = "localhost";
 	private static final Logger LOGGER = Logger.getLogger(WebServiceMock.class.getCanonicalName());
 	private static WebServiceMock instance;	
-	public static int NUMBER_OF_TEST_STANDS_CONFIGURED = 0;
 	private Gson gson;
+	@Getter
+	private List<JCDeceauxStandModel> currentReturnSample;
 	public static final String URL_MATCHER_STATIONS_SERVICE = "/vls/v1/stations.*";
 	
 	private WebServiceMock()
@@ -68,6 +70,7 @@ public class WebServiceMock
 	
 	public void configureToReturn(List<JCDeceauxStandModel> stands)
 	{
+		currentReturnSample = stands;
 		givenThat(get(urlMatching(WebServiceMock.URL_MATCHER_STATIONS_SERVICE)).willReturn(aResponse().withStatus(200).withBody(gson.toJson(stands))));
 	}
 	

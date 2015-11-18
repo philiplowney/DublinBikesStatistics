@@ -1,11 +1,13 @@
 package service;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Timeout;
@@ -16,6 +18,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 
+import model.Stand;
 import constants.SystemProperties;
 import constants.SystemProperties.SystemProperty;
 
@@ -27,6 +30,9 @@ public class PollingService
 
 	@Resource
 	private TimerService timerService;
+	
+	@EJB
+	private UpdateService updateService;
 
 	private Timer timer;
 	private WebTarget jcDeceauxAPIBaseTarget;
@@ -63,15 +69,19 @@ public class PollingService
 	@Timeout
 	public void pollWebServiceForStations()
 	{
+		String jsonResponse = null;
 		try
 		{
-			LOGGER.log(Level.INFO, "Querying the webservice...");
 			WebTarget fullTarget = jcDeceauxAPIBaseTarget.path("stations").queryParam("contract", contractName).queryParam("apiKey", apiKey);
-			String response = fullTarget.request().get(String.class);
+			jsonResponse = fullTarget.request().get(String.class);
 		}
 		catch(Exception e)
 		{
 			LOGGER.log(Level.WARNING, "Unable to query the webservice...");
+			return;
 		}
+
+		List<Stand> polledSnapshot = new JCDeauxPollingResult(jsonResponse).toStands();
+		updateService.receiveBulkUpdate(polledSnapshot);
 	}
 }
