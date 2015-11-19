@@ -1,5 +1,7 @@
 package persistence.dao;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -34,5 +36,12 @@ public class StandDAOImpl extends GenericDAOImpl<Stand> implements StandDAO
 		TypedQuery<Long> query = em.createNamedQuery(Stand.NAMED_QUERY_COUNT_WITH_NUMBER, Long.class);
 		query.setParameter(Stand.QUERY_PARAMETER_STAND_NUMBER, number);
 		return query.getSingleResult()>0;
+	}
+
+	@Override
+	public List<Stand> findAllCurrentStands()
+	{
+		TypedQuery<Stand> query = em.createNamedQuery(Stand.FIND_ALL_CURRENT, Stand.class);
+		return query.getResultList();
 	}
 }

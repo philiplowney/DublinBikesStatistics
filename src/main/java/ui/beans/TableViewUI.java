@@ -28,6 +28,6 @@ public class TableViewUI implements Serializable
 	@PostConstruct
 	public void init()
 	{
-		stands = standDAO.findAll();
+		stands = standDAO.findAllCurrentStands();
 	}
 }

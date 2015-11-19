@@ -1,18 +1,14 @@
 package systemTest.tools.steps;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.StandState;
 
-import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.embedder.Embedder;
@@ -20,65 +16,23 @@ import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import service.model.jcdeceaux.JCDeceauxStandModel;
-import systemTest.tools.WebServiceMock;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
-import constants.SystemProperties;
-import constants.SystemProperties.SystemProperty;
 
-public class RealTimeSteps extends Embedder
+public class FrontEndUserSteps extends Embedder
 {
-	public static final Logger LOGGER = Logger.getLogger(RealTimeSteps.class.getCanonicalName());
+	public static final Logger LOGGER = Logger.getLogger(FrontEndUserSteps.class.getCanonicalName());
 	private TableViewPage tableViewPage;
 
-	private void sleepForPollingPeriod()
+	@When("When the user navigates to the dashboard screen")
+	@Pending
+	public void navigateToDashboardScreen()
 	{
-		long pollingPeriodMillis = Long.parseLong(SystemProperties.getInstance().getProperty(SystemProperty.REST_SERVICE_POLLING_PERIOD_MILLISECONDS));
-		try
-		{
-			Thread.sleep(pollingPeriodMillis);
-		}
-		catch (InterruptedException e)
-		{
-			LOGGER.log(Level.WARNING, "Unable to sleep for polling period", e);
-		}
+		
 	}
 	
-	@Given("the bike stands have random capacity and occupancy")
-	public void givenTheBikeStandsHaveRandomCapacityAndOccupancy() throws URISyntaxException, IOException
-	{
-		List<JCDeceauxStandModel> defaultStandsAltered = WebServiceMock.getInstance().generateRealWorldSample();
-		
-		Random rand = new Random();
-		for(JCDeceauxStandModel stand : defaultStandsAltered)
-		{
-			int spaces = rand.nextInt(21);
-			int bikes = rand.nextInt(21);
-			stand.setAvailable_bikes(bikes);
-			stand.setAvailable_bike_stands(spaces);
-		}
-		WebServiceMock.getInstance().configureToReturn(defaultStandsAltered);
-		sleepForPollingPeriod();
-		LOGGER.info("Mock webservice configured to return randomised stand states for "+defaultStandsAltered.size()+" stands");
-	}
-
-	@Given("all the bike stands currently have a capacity of $capacity and an occupancy of $occupancy")
-	public void givenAllTheBikeStandsCurrentlyHaveACapacityOfAndAnOccupancyOf(int capacity, int occupancy) throws URISyntaxException, IOException
-	{
-		List<JCDeceauxStandModel> defaultStandsAltered = WebServiceMock.getInstance().generateRealWorldSample();
-		for(JCDeceauxStandModel stand : defaultStandsAltered)
-		{
-			stand.setAvailable_bikes(occupancy);
-			stand.setAvailable_bike_stands(capacity-occupancy);
-		}
-		WebServiceMock.getInstance().configureToReturn(defaultStandsAltered);
-		sleepForPollingPeriod();
-		LOGGER.info("Stands configured with capacity of "+capacity+" and occupancy of "+occupancy);
-	}
-
-	@When("the user navigates to the $screenName screen")
-	public void whenTheUserNavigatesToScreen(String screenName) throws InterruptedException
+	@When("the user navigates to the table-view screen")
+	public void whenTheUserNavigatesToTableViewScreen() throws InterruptedException
 	{
 		tableViewPage = new IndexPage().getLeftMenu().navRealTimeTableView();
 		LOGGER.info("I am looking at the table view page");
@@ -90,11 +44,11 @@ public class RealTimeSteps extends Embedder
 		tableViewPage.sortTableByColumn(column);
 	}
 
-	@Then("all stands will be visible in a table")
-	public void thenAllStandsWillBeVisibleInATable()
+	@Then("$num stands will be visible in a table")
+	public void thenXamountOfStandsWillBeVisibleInATable(int expectedNumber)
 	{
 		int rows = tableViewPage.countRowsInTable();
-		Assert.assertEquals(WebServiceMock.getInstance().getCurrentReturnSample().size(), rows);
+		Assert.assertEquals(expectedNumber, rows);
 	}
 
 	@Then("all stands will have a capacity of $capacity")
@@ -180,5 +134,17 @@ public class RealTimeSteps extends Embedder
 				Assert.assertTrue("Cell is not styled correctly even though the stand is empty", cells.get(1).getAttribute("class").contains("empty"));
 			}
 		}
+	}
+	
+	@Then("the bikes-to-spaces piechart will show <total_bikes> total available bikes")
+	@Pending
+	public void thenTheBikestospacesPiechartWillShowtotal_bikesTotalAvailableBikes() {
+	  // PENDING
+	}
+
+	@Then("the bikes-to-spaces piechart will show <total_free_stands> total available stands")
+	@Pending
+	public void thenTheBikestospacesPiechartWillShowtotal_free_standsTotalAvailableStands() {
+	  // PENDING
 	}
 }

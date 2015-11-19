@@ -30,14 +30,34 @@ public class UpdateServiceImpl implements UpdateService
 				Stand extantStand = standDAO.findByNumber(polledStand.getNumber());
 				extantStand.getState().setBikesAvailable(polledStand.getState().getBikesAvailable());
 				extantStand.getState().setPlacesAvailable(polledStand.getState().getPlacesAvailable());
+				extantStand.setInLatestUpdate(true);
 				standDAO.update(extantStand);
 			}
 			else
 			{
+				polledStand.setInLatestUpdate(true);
 				standDAO.update(polledStand);
 				LOGGER.info("New Stand Found, added to network: "+polledStand.toString());
 			}
 		}
-		// TODO: Remove those stands missing from the update
+		List<Integer> numbersOfStandsNotInLatestUpdate = determineNumbersOfStandsNotInLatestUpdate(numbersOfStandsInResponse);
+		
+		for(Integer numberOfStandNotInUpdate : numbersOfStandsNotInLatestUpdate)
+		{
+			Stand standToArchive = standDAO.findByNumber(numberOfStandNotInUpdate);
+			standToArchive.setInLatestUpdate(false);
+		}
+	}
+
+	private List<Integer> determineNumbersOfStandsNotInLatestUpdate(List<Integer> numbersOfStandsInResponse)
+	{
+		List<Integer> numbersOfStandsCurrentlyConfigured = new ArrayList<>();
+		List<Stand> allStands = standDAO.findAllCurrentStands();
+		for(Stand stand: allStands)
+		{
+			numbersOfStandsCurrentlyConfigured.add(stand.getNumber());
+		}
+		numbersOfStandsCurrentlyConfigured.removeAll(numbersOfStandsInResponse);
+		return numbersOfStandsCurrentlyConfigured;
 	}
 }

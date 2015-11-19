@@ -22,14 +22,9 @@ public class PollingSteps
 		WebServiceMock.getInstance();
 	}
 
-	@Given("the test JC Deceaux webservice says all stands are have a capacity of <capacity> and an occupancy of <occupancy>")
-	public void givenTheTestJCDeceauxWebserviceSaysAllStandsAreHaveACapacityOfcapacityAndAnOccupancyOfoccupancy() {
-	  // PENDING
-	}
-
 	@Given("the webservice has been polled")
 	public void givenTheWebserviceHasBeenPolled() {
-		
+		// take this as a given
 	}
 	
 	@Then("the webservice is polled periodically")
@@ -44,6 +39,5 @@ public class PollingSteps
 		WireMock.resetAllRequests();
 		Thread.sleep(millisecondsToSleep);
 		WireMock.verify(numberOfPollsToWaitFor, WireMock.getRequestedFor(WireMock.urlMatching(WebServiceMock.URL_MATCHER_STATIONS_SERVICE)));
-		
 	}
 }

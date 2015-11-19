@@ -29,6 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class WebServiceMock
 {
+	private static final int DEFAULT_NUMBER_OF_STANDS = 10;
 	private static final int SERVER_PORT = 9000;
 	private static final String SERVER_ADDRESS = "localhost";
 	private static final Logger LOGGER = Logger.getLogger(WebServiceMock.class.getCanonicalName());
@@ -50,7 +51,7 @@ public class WebServiceMock
 		
 		try
 		{
-			configureToReturn(generateRealWorldSample());
+			configureToReturn(generateRealWorldSample(DEFAULT_NUMBER_OF_STANDS));
 			LOGGER.info("Mock webservice set up at "+SERVER_ADDRESS+":"+SERVER_PORT+URL_MATCHER_STATIONS_SERVICE);
 		}
 		catch (URISyntaxException | IOException e)
@@ -76,6 +77,10 @@ public class WebServiceMock
 	
 	public List<JCDeceauxStandModel> generateRealWorldSample() throws URISyntaxException, IOException
 	{
+		return generateRealWorldSample(DEFAULT_NUMBER_OF_STANDS);
+	}
+	public List<JCDeceauxStandModel> generateRealWorldSample(int numberOfStands) throws URISyntaxException, IOException
+	{
 		Path sampleFilePath = Paths.get(WebServiceMock.class.getClassLoader().getResource("sampleResponse.json").toURI());
 		byte[] encodedLines = Files.readAllBytes(sampleFilePath);
 		String realWorldJSONResponse = new String(encodedLines, StandardCharsets.US_ASCII);
@@ -83,7 +88,7 @@ public class WebServiceMock
 		
 		List<JCDeceauxStandModel> allStandModels = gson.fromJson(realWorldJSONResponse, listType);
 		List<JCDeceauxStandModel> standsToReturn = new ArrayList<>();
-		for(int i=0; i<10; i++)
+		for(int i=0; i<numberOfStands; i++)
 		{
 			standsToReturn.add(allStandModels.get(i));
 		}
