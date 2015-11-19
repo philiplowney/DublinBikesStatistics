@@ -11,4 +11,10 @@ public class LeftMenu
 		actionBot.clickLeftMenuItem("Table");
 		return new TableViewPage();
 	}
+
+	public RealtimeDashboardPage navToRealtimeDashboard()
+	{
+		actionBot.clickLeftMenuItem("Dashboard");
+		return new RealtimeDashboardPage();
+	}
 }

@@ -20,11 +20,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@NamedQueries(
-{
+@NamedQueries
+({
 		@NamedQuery(name = Stand.NAMED_QUERY_FIND_BY_NUMBER, query = "SELECT s FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER),
 		@NamedQuery(name = Stand.FIND_ALL_CURRENT, query = "SELECT s FROM Stand s WHERE s.inLatestUpdate = true"),
-		@NamedQuery(name = Stand.NAMED_QUERY_COUNT_WITH_NUMBER, query = "SELECT count(s.id) FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER) })
+		@NamedQuery(name = Stand.NAMED_QUERY_COUNT_WITH_NUMBER, query = "SELECT count(s.id) FROM Stand s WHERE s.number = :" + Stand.QUERY_PARAMETER_STAND_NUMBER),
+		@NamedQuery(name = Stand.COUNT_CURRENTLY_AVAILABLE_BIKES, query = "SELECT SUM(s.state.bikesAvailable) FROM Stand s WHERE s.inLatestUpdate = true")
+})
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Stand implements Serializable
@@ -70,4 +72,5 @@ public class Stand implements Serializable
 	public static final String NAMED_QUERY_FIND_BY_NUMBER = "Stand.findByNumber";
 	public static final String NAMED_QUERY_COUNT_WITH_NUMBER = "Stand.countWithNumber";
 	public static final String FIND_ALL_CURRENT = "Stand.findAllCurrent";
+	public static final String COUNT_CURRENTLY_AVAILABLE_BIKES = "Stand.countCurrentlyAvailableBikes";
 }

@@ -44,4 +44,11 @@ public class StandDAOImpl extends GenericDAOImpl<Stand> implements StandDAO
 		TypedQuery<Stand> query = em.createNamedQuery(Stand.FIND_ALL_CURRENT, Stand.class);
 		return query.getResultList();
 	}
+
+	@Override
+	public int findTotalBikesCurrentlyAvailable()
+	{
+		TypedQuery<Long> query = em.createNamedQuery(Stand.COUNT_CURRENTLY_AVAILABLE_BIKES, Long.class);
+		return new Long(query.getSingleResult()).intValue();
+	}
 }

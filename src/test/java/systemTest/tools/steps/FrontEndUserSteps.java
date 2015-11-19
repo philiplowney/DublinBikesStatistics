@@ -24,11 +24,10 @@ public class FrontEndUserSteps extends Embedder
 	public static final Logger LOGGER = Logger.getLogger(FrontEndUserSteps.class.getCanonicalName());
 	private TableViewPage tableViewPage;
 
-	@When("When the user navigates to the dashboard screen")
-	@Pending
+	@When("the user navigates to the dashboard screen")
 	public void navigateToDashboardScreen()
 	{
-		
+		new IndexPage().getLeftMenu().navToRealtimeDashboard();
 	}
 	
 	@When("the user navigates to the table-view screen")
