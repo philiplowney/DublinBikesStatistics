@@ -1,0 +1,32 @@
+.ui-widget-header
+{
+	border: none;
+	background: #fe4a49;
+	color: #f4f4f8;
+	font-size: 1.4em;
+	text-shadow: none;
+}
+#contentArea .ui-panel .ui-panel-titlebar
+{
+	padding: 0;
+}
+#contentArea .ui-panel .ui-panel-title
+{
+	text-align: center;
+	margin: 0;
+	padding: 5px 0 5px 20px;
+	display: block;
+}
+.ui-panel
+{
+	padding: 0px !important;
+}
+.ui-widget-content
+{
+	border: none;
+	background: #ffffff;
+}
+.ui-widget-header
+{
+	font-weight: normal;
+}

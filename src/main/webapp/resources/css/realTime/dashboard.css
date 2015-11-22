@@ -1,0 +1,9 @@
+.tile
+{
+	width: 400px;
+	height: 200px;
+	float: left;
+	margin: 10px;
+	background: grey;
+	border-radius: 10px;
+}

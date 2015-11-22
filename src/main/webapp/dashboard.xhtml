@@ -12,19 +12,17 @@
 		<ui:define name="pageTitle">Dashboard</ui:define>
 		<ui:define name="content"> 
 
-			<!-- 
-			<h:outputScript library="js" name="realTime/dashboard.js"/>
-			-->
+			<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+			<h:outputScript library="js" name="dashboard.js"/>
 			<h:outputStylesheet library="css" name="realTime/dashboard.css"/>
 			
-			<h:form prependId="false">
-				<h:outputText id="totalBikesAvailable" value="Bikes: #{dashboardUI.bikesAvailable}"/>
-				<h:outputText id="totalSpacesAvailable" value="Spaces: #{dashboardUI.spacesAvailable}"/>
-			</h:form>
+		    <p:panel header="Availability">
+				<div id="piechart" style="height: 300px; width: 300px; backgroud: green;" ></div>
+			</p:panel>
 			
-			<div class="tile"></div>
-			<div class="tile"></div>
-			<div class="tile"></div>
+			<script type="text/javascript">
+				loadAvailabilityChart(#{dashboardUI.bikesAvailable}, #{dashboardUI.spacesAvailable});
+			</script>
 		</ui:define>
 	</ui:composition>
 </h:body>

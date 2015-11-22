@@ -1,16 +1,29 @@
+/* colour scheme: https://coolors.co/app/fe4a49-2ab7ca-fed766-e6e6ea-f4f4f8 */
 html
 {
 	font-family: 'Trebuchet MS' !important;
 }
 body
 {
-	background: #005C89;
+	/*Left Menu*/
+	background: #2ab7ca;
 	margin:0;
+}
+
+
+	#contentArea
+{
+	background: #f4f4f8;
+}
+#leftArea ul#menu li a.current
+{
+	font-weight: bold;
+	border-right: 20px solid #fed766;
 }
 #leftArea
 {
 	position: absolute;
-	width: 300px;
+	width: 250px;
 	top: 0px;
 	bottom: 0px;
 }
@@ -27,14 +40,18 @@ body
 	top: 0px;
 	right: 0px;
 	bottom: 0px;
-	left: 300px;
+	left: 250px;
 	overflow: auto;
 	padding: 20px 20px 20px 20px;
 }
 #leftArea #appTitle
 {
-	color: white;
+	color: #f4f4f8;
 	height: 60px;
+}
+ul li a
+{
+	color: #E8EEFF;
 }
 #leftArea #appTitle span
 {
@@ -42,7 +59,7 @@ body
 }
 #leftArea #appTitle span.main
 {
-	margin-left: 55px;
+	margin-left: 35px;
 	font-style: italic;
 	font-size: 2.5em;
 }
@@ -50,7 +67,7 @@ body
 {
 	font-size: 1em;
 	float: right;
-	margin-right: 80px;
+	margin-right: 50px;
 	margin-top: -10px;
 }
 #leftArea #menu-container
@@ -68,28 +85,20 @@ body
 	padding: 0;
 	margin: 0;
 }
-
-#leftArea ul#menu li a.current,
-	#contentArea
-{
-	background: white;
-}
 #leftArea ul#menu li a.current
 {
 	font-size: 1.5em;
-	color: black;
 	padding: 10px 0 10px 20px;
 }
 #leftArea ul#menu li a
 {
 	font-size: 1.2em;
-	color: #DDFFFF;
 	display: block;
 	text-decoration: none;
 	padding: 10px 0 10px 20px; 
 }
 #leftArea ul#menu li a:hover
 {
-	background: #3198C1;
+	background: #fed766;
 	color: white;
 }
