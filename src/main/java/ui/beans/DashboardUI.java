@@ -8,6 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import lombok.Getter;
+import lombok.Setter;
+
+import org.primefaces.model.chart.PieChartModel;
+
 import persistence.dao.StandDAO;
 
 @ManagedBean
@@ -22,9 +26,13 @@ public class DashboardUI implements Serializable
 	@Getter
 	private int bikesAvailable;
 	
+	@Getter
+	private int spacesAvailable;
+ 		
 	@PostConstruct
 	public void init()
 	{
 		bikesAvailable = standDAO.findTotalBikesCurrentlyAvailable();
+		spacesAvailable = standDAO.findTotalSpacesCurrentlyAvailable();
 	}
 }

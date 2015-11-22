@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import lombok.Getter;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotVisibleException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -26,7 +28,8 @@ public class ActionBot
 	
 	private static final String XPATH_ANY_TABLE = "//*[contains(@class, 'ui-datatable-tablewrapper')]";
 	private static final String XPATH_ALL_ROWS_IN_TABLE = XPATH_ANY_TABLE+"//tbody//tr";
-	
+
+	@Getter
 	protected WebDriver webDriver = WebDriverManager.getInstance().getDriver();
 
 	/**

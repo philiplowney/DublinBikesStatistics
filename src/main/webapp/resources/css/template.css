@@ -1,62 +1,95 @@
-html, body
+html
 {
-	margin: 0;
-	padding: 0;
 	font-family: 'Trebuchet MS' !important;
-	background: #FFFFFF;
 }
 body
 {
-	height: 100%;
-	padding: 10px;
+	background: #005C89;
+	margin:0;
 }
 #leftArea
 {
-	width: 200px;
-	height: 100%;
-	float: left;
-	margin-right: 10px;
+	position: absolute;
+	width: 300px;
+	top: 0px;
+	bottom: 0px;
 }
-
+#rightArea
+{
+	position: fixed;
+	right: 0px;
+	bottom: 0px;
+	background: blue;
+}
+#contentArea
+{
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 300px;
+	overflow: auto;
+	padding: 20px 20px 20px 20px;
+}
+#leftArea #appTitle
+{
+	color: white;
+	height: 60px;
+}
+#leftArea #appTitle span
+{
+	display: block;
+}
+#leftArea #appTitle span.main
+{
+	margin-left: 55px;
+	font-style: italic;
+	font-size: 2.5em;
+}
+#leftArea #appTitle span.subTitle
+{
+	font-size: 1em;
+	float: right;
+	margin-right: 80px;
+	margin-top: -10px;
+}
+#leftArea #menu-container
+{
+	width: 100%;
+	
+	bottom: 0px;
+	top:60px;
+	position: absolute;
+	padding-top: 20px;
+}
 #leftArea ul#menu
 {
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 }
-#leftArea ul#menu li
+
+#leftArea ul#menu li a.current,
+	#contentArea
 {
-	font-size: 1.2em;
-	border-bottom: 1px solid #1D5C75;
-	
+	background: white;
 }
-#leftArea ul#menu li.header
+#leftArea ul#menu li a.current
 {
-	background: #3D3D3D;
-	color: #ffffff;
 	font-size: 1.5em;
-	padding-left: 10px;
+	color: black;
+	padding: 10px 0 10px 20px;
 }
 #leftArea ul#menu li a
 {
-	padding: 10px;
-	color: #75451D;
+	font-size: 1.2em;
+	color: #DDFFFF;
 	display: block;
-	text-decoration: none; 
+	text-decoration: none;
+	padding: 10px 0 10px 20px; 
 }
 #leftArea ul#menu li a:hover
 {
 	background: #3198C1;
 	color: white;
-}
-#contentArea
-{
-	padding-top: 0px;
-}
-#pageHeading
-{
-	padding: 0px;
-	margin: 0 0 10px 0;
-	font-size: 2em;
-	line-height: 1em;
 }

@@ -8,10 +8,8 @@ import java.util.logging.Logger;
 
 import model.StandState;
 
-import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
-import org.jbehave.core.embedder.Embedder;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -19,16 +17,10 @@ import org.openqa.selenium.WebElement;
 import systemTest.tools.pageObjects.IndexPage;
 import systemTest.tools.pageObjects.TableViewPage;
 
-public class FrontEndUserSteps extends Embedder
+public class RealTimeTableScreenSteps
 {
-	public static final Logger LOGGER = Logger.getLogger(FrontEndUserSteps.class.getCanonicalName());
+	public static final Logger LOGGER = Logger.getLogger(RealTimeTableScreenSteps.class.getCanonicalName());
 	private TableViewPage tableViewPage;
-
-	@When("the user navigates to the dashboard screen")
-	public void navigateToDashboardScreen()
-	{
-		new IndexPage().getLeftMenu().navToRealtimeDashboard();
-	}
 	
 	@When("the user navigates to the table-view screen")
 	public void whenTheUserNavigatesToTableViewScreen() throws InterruptedException
@@ -133,17 +125,5 @@ public class FrontEndUserSteps extends Embedder
 				Assert.assertTrue("Cell is not styled correctly even though the stand is empty", cells.get(1).getAttribute("class").contains("empty"));
 			}
 		}
-	}
-	
-	@Then("the bikes-to-spaces piechart will show <total_bikes> total available bikes")
-	@Pending
-	public void thenTheBikestospacesPiechartWillShowtotal_bikesTotalAvailableBikes() {
-	  // PENDING
-	}
-
-	@Then("the bikes-to-spaces piechart will show <total_free_stands> total available stands")
-	@Pending
-	public void thenTheBikestospacesPiechartWillShowtotal_free_standsTotalAvailableStands() {
-	  // PENDING
 	}
 }

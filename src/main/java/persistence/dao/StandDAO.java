@@ -15,4 +15,6 @@ public interface StandDAO extends GenericDAO<Stand>
 
 	int findTotalBikesCurrentlyAvailable();
 
+	int findTotalSpacesCurrentlyAvailable();
+
 }

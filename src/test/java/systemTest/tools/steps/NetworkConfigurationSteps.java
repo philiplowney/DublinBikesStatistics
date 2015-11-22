@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.jbehave.core.annotations.Aliases;
 import org.jbehave.core.annotations.Given;
+import org.junit.Test;
 
 import service.model.jcdeceaux.JCDeceauxStandModel;
 import systemTest.tools.WebServiceMock;
@@ -31,7 +32,6 @@ public class NetworkConfigurationSteps
 			LOGGER.log(Level.WARNING, "Unable to sleep for polling period", e);
 		}
 	}
-	
 	@Given("there are $numberOf stands")
 	@Aliases(values = { 
 			"the number of stands is increased to $numberOfStands", 

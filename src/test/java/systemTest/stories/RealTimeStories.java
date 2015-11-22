@@ -27,9 +27,10 @@ import org.jbehave.core.steps.ParameterConverters.ExamplesTableConverter;
 import org.junit.runner.RunWith;
 
 import systemTest.tools.steps.CommonSteps;
+import systemTest.tools.steps.DashboardScreenSteps;
 import systemTest.tools.steps.NetworkConfigurationSteps;
 import systemTest.tools.steps.PollingSteps;
-import systemTest.tools.steps.FrontEndUserSteps;
+import systemTest.tools.steps.RealTimeTableScreenSteps;
 import de.codecentric.jbehave.junit.monitoring.JUnitReportingRunner;
 
 @RunWith(JUnitReportingRunner.class)
@@ -67,12 +68,12 @@ public class RealTimeStories extends JUnitStories
 	@Override
 	public InjectableStepsFactory stepsFactory()
 	{
-		return new InstanceStepsFactory(configuration(), new NetworkConfigurationSteps(), new CommonSteps(), new FrontEndUserSteps(), new PollingSteps());
+		return new InstanceStepsFactory(configuration(), new DashboardScreenSteps(), new NetworkConfigurationSteps(), new CommonSteps(), new RealTimeTableScreenSteps(), new PollingSteps());
 	}
 
 	@Override
 	protected List<String> storyPaths()
 	{
-		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*Dashboard.story", "**/excluded*.story");
+		return new StoryFinder().findPaths(codeLocationFromClass(this.getClass()), "**/*board.story", "**/excluded*.story");
 	}
 }

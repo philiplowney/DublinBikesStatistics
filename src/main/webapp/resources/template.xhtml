@@ -9,24 +9,26 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <h:head>
-	<h:outputStylesheet library="css" name="template.css" />
 	<title><ui:insert name="pageTitle" /></title>
 </h:head>
 
 <body>
 	<h:outputStylesheet library="css" name="template.css" />
 	<div id="leftArea">
-		<ul id="menu">
-			<li class="header">Real Time</li>
-			<li><a href="dashboard.jsf">Dashboard</a></li>
-			<li><a href="#">Near Me</a></li>
-			<li><a href="#">Look Up</a></li>
-			<li><a href="#">Map</a></li>
-			<li><a href="tableView.jsf">Table</a></li>
-		</ul>
+		<div id="appTitle">
+			<span class="main">Bikelytics</span>
+			<span class="subTitle">Dublin</span>
+		</div>
+		<div id="menu-container">
+			<ul id="menu">
+				<li><a class="#{fn:contains(request.requestURL, 'dashboard') ? 'current' : ''}" href="dashboard.jsf">Live Dashboard</a></li>
+				<li><a href="#">Near Me</a></li>
+				<li><a href="#">Map</a></li>
+				<li><a class="#{fn:contains(request.requestURL, 'tableView') ? 'current' : ''}" href="tableView.jsf">Stands Status</a></li>
+			</ul>
+		</div>
 	</div>
 	<div id="rightArea">
-		<h1 id="pageHeading"><ui:insert name="pageTitle" /></h1>
 		<div id="contentArea">
 			<ui:insert name="content" />
 		</div>

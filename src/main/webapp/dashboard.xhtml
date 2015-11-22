@@ -10,15 +10,21 @@
 <h:body>
 	<ui:composition template="resources/template.xhtml">
 		<ui:define name="pageTitle">Dashboard</ui:define>
-		<ui:define name="content">
+		<ui:define name="content"> 
+
 			<!-- 
 			<h:outputScript library="js" name="realTime/dashboard.js"/>
-			<h:outputStylesheet library="css" name="realTime/tableView.css"/>
-			 -->
-			<h:form>
-				<h:outputText id="availableBikes" value="Bikes: #{dashboardUI.bikesAvailable}"/>
-				<h:outputText id="availableSpaces" value="Spaces: "/>
+			-->
+			<h:outputStylesheet library="css" name="realTime/dashboard.css"/>
+			
+			<h:form prependId="false">
+				<h:outputText id="totalBikesAvailable" value="Bikes: #{dashboardUI.bikesAvailable}"/>
+				<h:outputText id="totalSpacesAvailable" value="Spaces: #{dashboardUI.spacesAvailable}"/>
 			</h:form>
+			
+			<div class="tile"></div>
+			<div class="tile"></div>
+			<div class="tile"></div>
 		</ui:define>
 	</ui:composition>
 </h:body>
